@@ -1,13 +1,86 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Anybody&family=Cinzel:wght@500&display=swap');
+
+:root {
+  --bg: #091337;
+  --orange: #fc7000;
+  --white: #fff;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Cinzel', serif;
+  /* font-family: 'Turret Road', cursive; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: linear-gradient(-45deg,  #000934, #000 80%);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.btn-style{
+  font-weight: bold;
+  letter-spacing: 2px;
+  background-image: linear-gradient(to left, var(--orange), rgb(255, 205, 55));
+  color: var(--white);
+  border-radius: 100px;
+  padding: 10px 20px;
+  width: 200px;
+  box-shadow: 0 0 0 0 white;
+  transition: .3s;
+  cursor: pointer;
+  -webkit-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+  -moz-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+  -ms-animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+  animation: pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+}
+
+.btn-style:hover{
+  padding: 20px 40px;
+  width: 250px;
+}
+
+@-webkit-keyframes pulse {
+  to {
+      box-shadow: 0 0 0 45px rgba(234, 74, 59, 0);
+  }
+}
+
+@-moz-keyframes pulse {
+  to {
+      box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);
+  }
+}
+
+@-ms-keyframes pulse {
+  to {
+      box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);
+  }
+}
+
+@keyframes pulse {
+  to {
+      box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);
+  }
+}
+
+canvas {
+  display: block;
+}
+.title {
+  color: #fff;
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  font-family: verdana;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: bold;
+}
+

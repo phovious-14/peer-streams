@@ -1,0 +1,67 @@
+.sidebar {
+    overflow-y: auto; /* the auto value is similar to scroll, but it adds scrollbars only when necessary */
+    word-break: keep-all; /* this is optional, so the words keep in one line */
+    white-space: nowrap;
+    /* background-image: url("../../../assets/focusbg2.png"); */
+    margin: 15px;
+    border-radius: 20px;
+    color: whitesmoke;
+    position: sticky;
+    top: 20px;
+    transition: .3s;
+    padding: 15px;  
+    object-fit: contain;
+    background-color: transparent;
+    border-top: 2px solid gray;
+    border-left: .5px solid gray;
+	animation: gradient 5s ease infinite;
+}
+
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.sidebar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.channel {
+    display:flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    height: auto;
+    margin: 15px 0 15px 0;
+}
+
+.channel img {
+    width: 40px;
+    border-radius: 100px;
+    height: 40px;
+}
+
+.channel p {
+    width: 70%;
+    height: auto;
+    margin-left: 20px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+    text-align: left;
+}
