@@ -6,6 +6,7 @@
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
+    background-color: #1b1b1b;
 }
 
 .home-container .sub-container {
@@ -30,3 +31,7 @@
     }
 }
 
+.bg-poster {
+    position: absolute;
+     
+}

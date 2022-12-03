@@ -6,12 +6,14 @@ import { Route, Routes } from "react-router-dom";
 import Streaming from "./components/Streaming/Streaming";
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { chain, configureChains, createClient, WagmiConfig, useAccount } from "wagmi";
+import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
+import Channels from "./components/channels/Channels";
+import Subscribers from "./components/subscribers/Subscribers";
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum],
+  [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum, chain.goerli],
   [alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
 );
 const { connectors } = getDefaultWallets({
@@ -25,8 +27,6 @@ const wagmiClient = createClient({
 });
 
 function App() {
-  const { address, isConnecting, isDisconnected } = useAccount()
-  console.log(isConnecting);
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
@@ -35,8 +35,8 @@ function App() {
           <Header />
           <Routes>
             <Route exact path="/" element={<HomeContainer />} />
-            {/* <Route exact path="/monetization" element={<NftCollection />} />
-        <Route exact path="/account" element={<Account />} /> */}
+            <Route exact path="/channels" element={<Channels />} />
+            <Route exact path="/subscribers" element={<Subscribers />} />
             <Route exact path="/streaming" element={<Streaming />} />
           </Routes>
         </div>

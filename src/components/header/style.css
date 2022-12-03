@@ -1,5 +1,7 @@
 .header {
     z-index: 10;
+    backdrop-filter: blur(20px);
+    background-color: #ffffff30;
 }
 
 .stream-now {
@@ -14,10 +16,11 @@
 
 .nav-btn {
     background: white;
-    border-bottom: 1px solid blue;
-    transition: .2s;
+    transition: .1s;
+    border-bottom: 3px solid transparent;
 }
 
 .nav-btn:hover {
     transform: scale(1.1);
+    border-bottom: 3px solid blue;
 }

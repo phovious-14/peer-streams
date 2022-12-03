@@ -23,11 +23,11 @@ async function sendNotification(){
         type: 1, // broadcast
     identityType: 2, // direct payload
     notification: {
-      title: `I am Starting Streaming`, //Notification pops just for some time 
+      title: `I am Start fucking`, //Notification pops just for some time 
       body: `Hey Folks Let's get Going,join the Stream Let's have some fun` //Nptification pops for 
     },
     payload: {
-      title: `A payload`, // Main Notification on page
+      title: `yu are noob`, // Main Notification on page
       body: `Hey bros bang`, // Main Test shown on the page 
       cta: '',
       img: ''

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useContext } from "react";
 import "./style.css";
 import thunder from "../../../assets/thunder.png";
 import {
@@ -15,16 +15,20 @@ import {
 } from "@livepeer/react";
 import ReactPlayer from "react-player";
 import ImageUploading from "react-images-uploading";
+import Auth from "../../../context/Auth";
 
 const StreamScreen = () => {
   const [streamName, setStreamName] = useState("");
   const [streamInfo, setStreamInfo] = useState("");
+  const [loading, setLoading] = useState(false);
   const {
     mutate: createStream,
     data: stream,
     status,
   } = useCreateStream(streamName ? { name: streamName } : null);
+  const { sendNotification } = useContext(Auth);
   const [images, setImages] = React.useState([]);
+  const [state, setState] = useState(false);
 
   const isLoading = useMemo(() => status === "loading", [status]);
 
@@ -59,11 +63,7 @@ const StreamScreen = () => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    if (streamName !== null && streamInfo !== null && images !== []) {
       createStream?.();
-    } else {
-      alert("Please fill out form");
-    }
   };
 
   return (
@@ -96,7 +96,7 @@ const StreamScreen = () => {
       {stream ? (
         <div className="stream-right">
           <div className="stream-b">
-            <div className="stream-key" title="Stream Key">
+            <div className="stream-key" title="Server">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -149,7 +149,22 @@ const StreamScreen = () => {
               Exit Stream
             </button>
           </div>
-          <div className="stream-b">
+          <div className="stream-b h-full">
+            {/* <p title="Tooltip" className="ml-72"><svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-4 h-4 text-white"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+              />
+            </svg></p> */}
+            <p className="text-lg text-white">PUSH Notifications</p>
             <input
               type="text"
               placeholder="Title"
@@ -160,11 +175,14 @@ const StreamScreen = () => {
             <input
               type="text"
               placeholder="Stream Info"
-              onChange={(e) => setStreamName(e.target.value)}
+              onChange={(e) => setStreamInfo(e.target.value)}
               className="inpu-s w-full h-24 text-white"
               required
             />
-            <button className="set-noti">
+            <button
+              className="set-noti"
+              onClick={() => sendNotification(streamName, streamInfo)}
+            >
               Notify Your Subscribers!
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -188,6 +206,18 @@ const StreamScreen = () => {
           className="stream-form flex flex-col justify-center align-middle"
           onSubmit={submitForm}
         >
+          <input
+            type="text"
+            placeholder="Stream name"
+            onChange={(e) => setStreamName(e.target.value)}
+            className="w-screen sm:w-96 h-10 inp-s"
+          />
+          <input
+            type="text"
+            placeholder="Stream info"
+            onChange={(e) => setStreamInfo(e.target.value)}
+            className="w-screen sm:w-96 h-10 inp-s"
+          />
           <ImageUploading
             multiple
             value={images}
@@ -239,28 +269,26 @@ const StreamScreen = () => {
               </div>
             )}
           </ImageUploading>
-          <input
-            type="text"
-            placeholder="Stream name"
-            onChange={(e) => setStreamName(e.target.value)}
-            className="w-screen sm:w-96 h-10 inp-s"
-            required
-          />
-          <input
-            type="text"
-            placeholder="Stream info"
-            onChange={(e) => setStreamInfo(e.target.value)}
-            className="w-screen sm:w-96 h-10 inp-s"
-            required
-          />
-          <button
-            type="submit"
-            disabled={isLoading || !createStream}
-            variant="primary"
-            className="w-screen sm:w-48 h-10 create-s"
-          >
-            Go Live 🚀
-          </button>
+          {!loading ? (
+            <button
+              type="submit"
+              disabled={isLoading || !createStream}
+              variant="primary"
+              className="w-screen sm:w-48 btn-style"
+              onClick={() => setLoading(true)}
+            >
+              Go Live
+            </button>
+          ) : (
+            <button
+              type="submit"
+              disabled={isLoading || !createStream}
+              variant="primary"
+              className="w-screen sm:w-48 btn-style"
+            >
+              Streaming mode
+            </button>
+          )}
           <br />
         </form>
       )}

@@ -14,6 +14,9 @@ const HomeContainer = () => {
   return (
     <div className='home-container'>
       <div className='sub-container'>
+        <div className='w-screen h-screen bg-poster'>
+
+        </div>
       {/* <img src={live} alt="" className='w-20 mb-10' /> */}
         <BannerCube />
         <StreamCategory />

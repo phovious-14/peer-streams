@@ -109,7 +109,7 @@ export default function Header() {
   return (
     <Popover className="relative header">
       
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+      <div className="mx-auto max-w-10xl px-4 sm:px-6"> 
         <div className="flex items-center justify-between border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <a href="#">
@@ -127,10 +127,15 @@ export default function Header() {
             </Popover.Button>
           </div>
           <Popover.Group as="nav" className="hidden space-x-10 md:flex">
-            
 
             <Link to="/" className="text-base font-medium text-black nav-btn p-2">
               Home
+            </Link>
+            <Link to="/channels" className="text-base font-medium text-black nav-btn p-2">
+              Channels
+            </Link>
+            <Link to="/subscribers" className="text-base font-medium text-black nav-btn p-2">
+              Subscribers
             </Link>
             <Link to="/streaming" className="text-base font-medium text-white stream-now p-2 rounded-lg">
               Create stream
@@ -175,14 +180,25 @@ export default function Header() {
                     <Link
                       className="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50"
                       to="/"
-                    >
-                      
+                    >                      
                       <span className="ml-3 text-base font-medium text-gray-900">Home</span>
-                    </Link><Link
+                    </Link>
+                    <Link
+                      className="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50"
+                      to="/channels"
+                    >                      
+                      <span className="ml-3 text-base font-medium text-gray-900">Channels</span>
+                    </Link>
+                    <Link
+                      className="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50"
+                      to="/subscribers"
+                    >                      
+                      <span className="ml-3 text-base font-medium text-gray-900">Subscribers</span>
+                    </Link>
+                    <Link
                       className="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50"
                       to="/streaming"
-                    >
-                      
+                    >                      
                       <span className="ml-3 text-base font-medium text-gray-900">Create stream</span>
                     </Link>
                 </nav>

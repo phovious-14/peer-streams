@@ -17,7 +17,7 @@ body {
   /* font-family: 'Turret Road', cursive; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: var(--bg);
+  background: var(--black);
 }
 
 code {
