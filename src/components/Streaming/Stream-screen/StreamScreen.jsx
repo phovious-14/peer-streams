@@ -59,74 +59,135 @@ const StreamScreen = () => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    if(streamName !== null && streamInfo !== null && images !== [] ){
+    if (streamName !== null && streamInfo !== null && images !== []) {
       createStream?.();
     } else {
-      alert("Please fill out form")
+      alert("Please fill out form");
     }
-      
-  }
+  };
 
   return (
-    <div className="w-full h-full sm:-m-3 stream-screen text-black flex flex-row flex-wrap justify-center align-middle">
+    <div className="w-full h-full stream-screen text-black flex flex-row flex-wrap justify-around -mt-8">
+      {stream?.playbackId && (
+        <div className="stream-s">
+          <Player title={stream?.name} playbackId={stream?.playbackId}>
+            <ControlsContainer
+              middle={<Progress />}
+              left={
+                <>
+                  <PlayButton onClick={() => console.log("button clicked!")} />
+                  <Volume showSlider={false} />
+                  <TimeDisplay />
+                </>
+              }
+              right={<PictureInPictureButton />}
+            />
+          </Player>
+          {/* <ReactPlayer
+            controls
+            onStart={videoStart()}
+            onPause={videoStop()}
+            width="100%"
+            height="90%"
+            url={stream.playbackUrl}
+          /> */}
+        </div>
+      )}
       {stream ? (
-        <div className="stream-b">
-          <div className="stream-key" title="Stream Key">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"
-              />
-            </svg>
+        <div className="stream-right">
+          <div className="stream-b">
+            <div className="stream-key" title="Stream Key">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
+                />
+              </svg>
+              rtmp://rtmp.livepeer.com/live/
+            </div>
+            <div className="stream-key" title="Stream Key">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"
+                />
+              </svg>
 
-            {stream.streamKey}
+              {stream.streamKey}
+            </div>
+            <button className="delete-btn">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+                />
+              </svg>
+              Exit Stream
+            </button>
           </div>
-          <div className="stream-key" title="Stream Key">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"
-              />
-            </svg>
-
-            {stream.playbackUrl}
+          <div className="stream-b">
+            <input
+              type="text"
+              placeholder="Title"
+              onChange={(e) => setStreamName(e.target.value)}
+              className="inpu-s w-full h-24"
+              required
+            />
+            <input
+              type="text"
+              placeholder="Stream Info"
+              onChange={(e) => setStreamName(e.target.value)}
+              className="inpu-s w-full h-24 text-white"
+              required
+            />
+            <button className="set-noti">
+              Notify Your Subscribers!
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6 ml-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+                />
+              </svg>
+            </button>
           </div>
-          <button className="delete-btn">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
-              />
-            </svg>
-            Exit Stream
-          </button>
         </div>
       ) : (
-        <form className="stream-form flex flex-col justify-center align-middle" onSubmit={submitForm}>
+        <form
+          className="stream-form flex flex-col justify-center align-middle"
+          onSubmit={submitForm}
+        >
           <ImageUploading
             multiple
             value={images}
@@ -155,10 +216,21 @@ const StreamScreen = () => {
                   Click or drag Stream banner
                 </button>
                 {imageList.map((image, index) => (
-                  <div key={index} className="image-item flex flex-col justify-center align-middle">
-                    <img src={image["data_url"]} alt="" width="100" className="m-auto" />
+                  <div
+                    key={index}
+                    className="image-item flex flex-col justify-center align-middle"
+                  >
+                    <img
+                      src={image["data_url"]}
+                      alt=""
+                      width="100"
+                      className="m-auto"
+                    />
                     <div className="image-item__btn-wrapper">
-                      <button onClick={() => onImageRemove(index)} className="border-2 pl-4 pr-4 pt-2 pb-2 m-4 bg-rose-600 rounded-lg text-white">
+                      <button
+                        onClick={() => onImageRemove(index)}
+                        className="border-2 pl-4 pr-4 pt-2 pb-2 m-4 bg-rose-600 rounded-lg text-white"
+                      >
                         Remove
                       </button>
                     </div>
@@ -181,7 +253,8 @@ const StreamScreen = () => {
             className="w-screen sm:w-96 h-10 inp-s"
             required
           />
-          <button type="submit"
+          <button
+            type="submit"
             disabled={isLoading || !createStream}
             variant="primary"
             className="w-screen sm:w-48 h-10 create-s"
@@ -189,33 +262,7 @@ const StreamScreen = () => {
             Go Live 🚀
           </button>
           <br />
-          <br />
         </form>
-      )}
-      {stream?.playbackId && (
-        <div className="stream-s">
-          <Player title={stream?.name} playbackId={stream?.playbackId}>
-            <ControlsContainer
-              middle={<Progress />}
-              left={
-                <>
-                  <PlayButton onClick={() => console.log("button clicked!")} />
-                  <Volume showSlider={false} />
-                  <TimeDisplay />
-                </>
-              }
-              right={<PictureInPictureButton />}
-            />
-          </Player>
-          {/* <ReactPlayer
-            controls
-            onStart={videoStart()}
-            onPause={videoStop()}
-            width="100%"
-            height="90%"
-            url={stream.playbackUrl}
-          /> */}
-        </div>
       )}
     </div>
   );

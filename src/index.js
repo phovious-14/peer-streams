@@ -24,6 +24,7 @@ root.render(
       <Router>
         <AuthProvider>
           <App />
+          {/* <Push /> */}
         </AuthProvider>
       </Router>
     </LivepeerConfig>
