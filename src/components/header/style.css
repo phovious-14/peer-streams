@@ -1,3 +1,23 @@
 .header {
     z-index: 10;
 }
+
+.stream-now {
+    background: linear-gradient(45deg, #5271Ff, #1b1b1b);
+    transition: .2s;
+}
+
+.stream-now:hover {
+    background: linear-gradient(45deg,#1b1b1b, #5271Ff,);
+    transform: scale(1.1);
+}
+
+.nav-btn {
+    background: white;
+    border-bottom: 1px solid blue;
+    transition: .2s;
+}
+
+.nav-btn:hover {
+    transform: scale(1.1);
+}

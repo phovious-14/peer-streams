@@ -7,21 +7,17 @@ import roar from '../../assets/roar.png'
 import { Link } from 'react-router-dom'
 import Auth from '../../context/Auth'
 import thunder2 from '../../assets/thunder2.png'
+import live from '../..//assets/live.gif.crdownload'
 
 const HomeContainer = () => {
   const {audio} = useContext(Auth)
   return (
     <div className='home-container'>
-      <img src={thunder2} alt="" className='fixed bottom-0 left-0 w-48 z-50' />
-      <ChannelList />
       <div className='sub-container'>
+      {/* <img src={live} alt="" className='w-20 mb-10' /> */}
         <BannerCube />
         <StreamCategory />
       </div>
-      <Link to="/streaming"><img src={roar} alt="" className='fixed w-48 bottom-2 right-4 z-10' 
-              onClick={() => {
-                audio.play();
-              }} /></Link>
     </div>
   )
 }

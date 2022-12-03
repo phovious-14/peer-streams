@@ -2,21 +2,20 @@
     min-height: 80%;
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
 }
 
 .home-container .sub-container {
     position: relative;
-    min-height: 70%;
-    margin-top: -10px;
+    min-height: 100%;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
     transition: .3s;
     padding: 10px;
     width: 80%;
-    border-top: 1px solid gray;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }

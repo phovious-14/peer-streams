@@ -13,7 +13,7 @@ const RecommandedStreams = () => {
   return (
     <div className="recomm-slider">
       <Swiper
-        slidesPerView={3}
+        slidesPerView={2}
         spaceBetween={30}
         modules={[Pagination]}
         className="mySwiper"

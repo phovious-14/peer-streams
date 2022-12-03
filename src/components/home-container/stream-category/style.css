@@ -1,3 +1,7 @@
 .stream-cat{
-
+    border-radius: 20px;
+    margin-top: 100px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #5271Ff, #1b1b1b);
 }

@@ -1,7 +1,102 @@
 .stream-screen {
-    background: url('../../../assets//redbg.jpg');
     width: 100%;
     height: 100%;
-    background-position: center;
-    background-size: cover;
+}
+
+.stream-s {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stream-b {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    padding: 20px;
+}
+
+.stream-key {
+    padding: 10px;
+    width: 250px;
+    background: white;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.stream-key svg {
+    margin-right: 10px;
+}
+
+.delete-btn {
+    padding: 10px;
+    width: 250px;
+    background: rgb(254, 86, 86);
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.delete-btn svg {
+    margin-right: 10px;
+}
+
+.delete-btn:hover {
+    background-color: rgb(255, 37, 37);
+}
+
+.create-s {
+    background-color: #ff5252;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .2s;
+    margin: 20px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.create-s:hover {
+    transform: scale(1.1);
+    background-color: rgb(255, 0, 0);
+}
+
+.inp-s {
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 0 20px;
+    transition: .2s;
+    margin: 10px 0;
+    background-color: transparent;
+    color: black;
+}
+
+.inp-s::placeholder {
+    color: black;
+}
+
+.inp-s:focus {
+    transform: scale(1.1);
+    outline: none;
+    border: 3px solid white;
+}
+
+.stream-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    padding: 40px;
+    border-radius: 40px;
+    background: linear-gradient(45deg, rgb(97, 110, 255), white);
 }

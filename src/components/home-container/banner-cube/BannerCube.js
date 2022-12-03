@@ -13,7 +13,7 @@ import livestream from '../../../assets/live stream.png'
 
 const BannerCube = () => {
   return (
-    <>
+    <div className="p-10 swipe">
       <Swiper
         autoplay={{
           delay: 2500,
@@ -21,35 +21,30 @@ const BannerCube = () => {
         }}
         pagination={true}
         modules={[Autoplay, Pagination]}
-        className="mySwiper"
+        className="mySwiper swipe"
       >
         <SwiperSlide>
           <img src="https://www.teahub.io/photos/full/28-288661_naruto-fire-and-ice-hd-anime-wallpaper-desktop.jpg" />
           <button className="fixed z-10 text-red-700 btn-style bottom-10 left-10 uppercase space-x-1">watch now</button>
-          <p className="absolute top-0 w-48 right-10" ><img src={livestream} alt="" className="w-10"/></p>
         </SwiperSlide>
         <SwiperSlide>
           <img src="https://m.media-amazon.com/images/I/81lkcwrNsmL._SX450_.jpg" />
           <button className="fixed z-10 text-red-700 btn-style bottom-10 left-10 uppercase space-x-1">watch now</button>
-          <p className="absolute top-0 w-48 right-10" ><img src={livestream} alt="" className="w-10"/></p>
         </SwiperSlide>
         <SwiperSlide>
           <img src="https://anime-poster.com/wp-content/uploads/2021/12/Anime-Posters-Web-Banner-1920x730px.jpg" />
           <button className="fixed z-10 text-red-700 btn-style bottom-10 left-10 uppercase space-x-1">watch now</button>
-          <p className="absolute top-0 w-48 right-10" ><img src={livestream} alt="" className="w-10"/></p>
         </SwiperSlide>
         <SwiperSlide>
           <img src="https://cdn.shopify.com/s/files/1/0747/3829/products/mZ0200_1024x1024.jpeg?v=1571443957" />
           <button className="fixed z-10 text-red-700 btn-style bottom-10 left-10 uppercase space-x-1">watch now</button>
-          <p className="absolute top-0 w-48 right-10" ><img src={livestream} alt="" className="w-10"/></p>
         </SwiperSlide>
         <SwiperSlide>
           <img src="https://i.etsystatic.com/28301644/r/il/b8abbb/4022772719/il_fullxfull.4022772719_jfmb.jpg" />
           <button className="fixed z-10 text-red-700 btn-style bottom-12 left-12 uppercase space-x-1">watch now</button>
-          <p className="absolute top-0 w-48 right-10" ><img src={livestream} alt="" className="w-10"/></p>
         </SwiperSlide>
       </Swiper>
-    </>
+    </div>
   )
 }
 
