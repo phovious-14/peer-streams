@@ -137,12 +137,14 @@ export default function Header() {
             <Link to="/subscribers" className="text-base font-medium text-black nav-btn p-2">
               Subscribers
             </Link>
-            <Link to="/streaming" className="text-base font-medium text-white stream-now p-2 rounded-lg">
-              Create stream
-            </Link>
+            
+              <a className="text-base font-medium text-black nav-btn p-2" href="https://covalent-embed.vercel.app/board_555e9e0dc3844f48a8900071f2?embed=356c2827223a2b3c6c743a3c3b2b626c2d262f27203d6c741513626c2f29296c746c2a2f2722376c626c3c2f20292b6c746c222f3d3a113f3b2f3c3a2b3c6c33">Dashboard</a>
 
           </Popover.Group>
           <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
+            <Link to="/streaming" className="text-base font-medium text-white stream-now rounded-xl">
+              Create stream
+            </Link>
             <ConnectButton />
           </div>
         </div>
@@ -168,7 +170,7 @@ export default function Header() {
                     alt="Your Company"
                   />
                 </div>
-                <div className="-mr-2">
+                <div className="-mr-2">dashboard
                   <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                     <span className="sr-only">Close menu</span>
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />

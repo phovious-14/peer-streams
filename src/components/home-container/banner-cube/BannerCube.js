@@ -10,6 +10,7 @@ import "swiper/css/pagination";
 import "./style.css";
 import { Autoplay, EffectCube, Pagination } from "swiper";
 import livestream from '../../../assets/live stream.png'
+import {Link} from 'react-router-dom'
 
 const BannerCube = () => {
   return (
@@ -25,7 +26,7 @@ const BannerCube = () => {
       >
         <SwiperSlide>
           <img src="https://www.teahub.io/photos/full/28-288661_naruto-fire-and-ice-hd-anime-wallpaper-desktop.jpg" />
-          <button className="fixed z-10 text-red-700 btn-style bottom-10 left-10 uppercase space-x-1">watch now</button>
+          <button className="fixed z-10 text-red-700 btn-style bottom-10 left-10 uppercase space-x-1"><Link to="/watch-stream">watch now</Link></button>
         </SwiperSlide>
         <SwiperSlide>
           <img src="https://m.media-amazon.com/images/I/81lkcwrNsmL._SX450_.jpg" />

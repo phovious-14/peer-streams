@@ -11,6 +11,7 @@ import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import Channels from "./components/channels/Channels";
 import Subscribers from "./components/subscribers/Subscribers";
+import WatchStream from "./components/watchSream/WatchStream";
 
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum, chain.goerli],
@@ -37,6 +38,7 @@ function App() {
             <Route exact path="/" element={<HomeContainer />} />
             <Route exact path="/channels" element={<Channels />} />
             <Route exact path="/subscribers" element={<Subscribers />} />
+            <Route exact path="/watch-stream" element={<WatchStream />} />
             <Route exact path="/streaming" element={<Streaming />} />
           </Routes>
         </div>

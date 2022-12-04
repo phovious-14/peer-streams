@@ -11,6 +11,8 @@ import { useEnsName } from 'wagmi'
 const Auth = createContext({});
 export const AuthProvider = ({ children }) => {
   const { address, isConnecting, isDisconnected } = useAccount();
+  const [playbackId, setPlaybackId] = useState('')
+  const [subs, setSubs] = useState('')
 
   const provider = new ethers.providers.Web3Provider(window.ethereum);
 
@@ -81,13 +83,16 @@ export const AuthProvider = ({ children }) => {
 
     const subscribers = await PushAPI.channels._getSubscribers({
       channel: 'eip155:5:0x2AEcb6DeE3652dA1dD6b54D5fd4f7D8F43DaEb78', // channel address in CAIP
-      env: "staging",
+      env: 'staging',
     });
-
+    // let arr;
+    var arr = []
     subscribers.forEach(async (addr) => {
       const ens = await provider.lookupAddress(addr);
-      console.log(ens);
+      arr.push(ens)
+      // console.log(ens);
     });
+    setSubs(arr)
   }
 
   async function getChannelList() {
@@ -98,11 +103,13 @@ export const AuthProvider = ({ children }) => {
       env: "staging",
     });
     console.log(Object.getOwnPropertyNames(channelsData))
-    console.log(channelsData[0])
+    let arr = [];
     channelsData.forEach(element => {
-      //DO a IF 
+      arr.push(element.channel);
       console.log(element.channel);
     });
+    console.log(arr);
+    // return arr;
   }
 
   async function optIntoAChannel(joinChannel) {
@@ -142,6 +149,66 @@ export const AuthProvider = ({ children }) => {
     });
   }
 
+  //where the Superfluid logic takes place
+  // async function createNewFlow(recipient) {
+  //   let flowRate = 10000000;
+  //   const provider = new ethers.providers.Web3Provider(window.ethereum);
+  //   const { ethereum } = window;
+  //   if (!ethereum) {
+  //     alert("Get MetaMask!");
+  //     return;
+  //   }
+  //   const accounts = await ethereum.request({
+  //     method: "eth_requestAccounts"
+  //   });
+  //   console.log("Connected", accounts[0]);
+
+  //   const signer = provider.getSigner();
+
+  //   const chainId = await window.ethereum.request({ method: "eth_chainId" });
+  //   const sf = await Framework.create({
+  //     chainId: Number(chainId),
+  //     provider: provider
+  //   });
+
+  //   const DAIxContract = await sf.loadSuperToken("fDAIx");
+  //   const DAIx = DAIxContract.address;
+
+  //   try {
+  //     const createFlowOperation = sf.cfaV1.createFlow({
+  //       sender: accounts[0],
+  //       receiver: recipient,
+  //       flowRate: flowRate,
+  //       superToken: DAIx
+  //       // userData?: string
+  //     });
+
+
+
+  //     console.log("Creating your stream...");
+
+  //     const result = await createFlowOperation.exec(signer);
+  //     console.log(result);
+
+  //     console.log(
+  //       `Congrats - you've just created a money stream!
+  //   View Your Stream At: https://app.superfluid.finance/dashboard/${recipient}
+  //   Network: Kovan
+  //   Super Token: DAIx
+  //   Sender: ${accounts[0]}
+  //   Receiver: ${recipient},
+  //   FlowRate: ${flowRate}
+  //   `
+  //     );
+  //     // should have same address as sender
+  //   } catch (error) {
+  //     console.log(
+  //       "Hmmm, your transaction threw an error. Make sure that this stream does not already exist, and that you've entered a valid Ethereum address!"
+  //     );
+  //     console.error(error);
+  //   }
+  // }
+
   return (
     <Auth.Provider
       value={{
@@ -152,7 +219,10 @@ export const AuthProvider = ({ children }) => {
         getSubscriberList,
         optIntoAChannel,
         optOutOfChannel,
-        getChannelList
+        getChannelList,
+        playbackId, setPlaybackId,
+        
+        // createNewFlow
       }}
     >
       {children}

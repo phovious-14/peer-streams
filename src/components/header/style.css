@@ -7,6 +7,8 @@
 .stream-now {
     background: linear-gradient(45deg, #5271Ff, #1b1b1b);
     transition: .2s;
+    padding: 9px;
+    margin: 0 10px;
 }
 
 .stream-now:hover {
@@ -15,7 +17,7 @@
 }
 
 .nav-btn {
-    background: white;
+    color: white;
     transition: .1s;
     border-bottom: 3px solid transparent;
 }
