@@ -1,5 +1,4 @@
 {
-  "proxy":"http://localhost:8001/",
   "name": "peer-streams",
   "version": "0.1.0",
   "private": true,
@@ -12,6 +11,7 @@
     "@mui/material": "^5.10.15",
     "@pushprotocol/restapi": "^0.2.2",
     "@rainbow-me/rainbowkit": "^0.8.0",
+    "@superfluid-finance/sdk-core": "^0.5.8",
     "@tanstack/react-query": "^4.14.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
