@@ -10,14 +10,13 @@ import {
   createReactClient,
   studioProvider,
 } from "@livepeer/react";
-import Push from './components/push/Push'
 
 const livepeerClient = createReactClient({
   provider: studioProvider({    
-    apiKey: '2df1219b-52f9-43bb-b5cb-bd8d7b9998a8',    
+    apiKey: process.env.REACT_APP_LIVEPEER_API,    
   }),
 });
- 
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
@@ -25,7 +24,6 @@ root.render(
       <Router>
         <AuthProvider>
           <App />
-          {/* <Push /> */}
         </AuthProvider>
       </Router>
     </LivepeerConfig>

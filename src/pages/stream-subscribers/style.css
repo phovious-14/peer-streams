@@ -1,0 +1,33 @@
+.streamer-subs {
+    display: flex;
+    min-height: 100vh;
+    width: calc(100vw - 70px);
+    position: absolute;
+    left: 100px;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    background-image: linear-gradient(45deg, #642B73, #C6426E);
+    padding: 20px;
+}
+
+.streamer-subs .subs-list {
+    width: 40%;
+    height: auto;
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.subs-list p {
+    font-size: 1rem;
+    color: gray;
+    border-bottom: 1px solid lightblue;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+}

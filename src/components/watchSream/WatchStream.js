@@ -20,7 +20,7 @@ const WatchStream = () => {
   const [playbackId, setPlaybackId] = useState("");
   // const [state, setState] = useState('pause')
   const [videourl,setvideourl] = useState();
-  const {deleteNetFlow, createNewFlow} = useContext(Auth)
+  const {deleteNetFlow, createNewFlow, isPlaying} = useContext(Auth)
 
   const handleChange = (event) => {
     setvideourl(event.target.value);
@@ -70,6 +70,7 @@ const WatchStream = () => {
             width="1080px"
             height="720px"
             url={videourl}
+            playing={isPlaying}
           />
         )}
         <div className="stream-b h-full">

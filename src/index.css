@@ -5,10 +5,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
 :root {
-  --black: #1b1b1b,
-  --blue: #5271FF,
-  --red: #FF0000,
-  --white: #ffffff
+  /* ===== Colors ===== */
+  --body-color: #e4e9f7;
+  --sidebar-color: #fff;
+  --primary-color: #0e76fd;
+  --primary-color-light: #f6f5ff;
+  --text-color: #707070;
+
+  /* ====== Transition ====== */
+  --tran-03: all 0.2s ease;
+  --tran-03: all 0.3s ease;
+  --tran-04: all 0.3s ease;
+  --tran-05: all 0.3s ease;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -17,6 +29,7 @@ body {
   /* font-family: 'Turret Road', cursive; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 code {
@@ -25,13 +38,14 @@ code {
 }
 
 .btn-style{
+  font-size: .7rem;
   font-weight: bold;
   letter-spacing: 2px;
-  background: linear-gradient(105deg, rgb(255, 28, 28) 50%, #1b1b1b);
+  background: linear-gradient(105deg, #fc2c2c 50%, #1b1b1b);
   color: white;
   border-radius: 100px;
   padding: 10px 20px;
-  width: 200px;
+  width: 11rem;
   box-shadow: 0 0 0 0 white;
   transition: .3s;
   cursor: pointer;
@@ -43,7 +57,7 @@ code {
 
 .btn-style:hover{
   padding: 20px 40px;
-  width: 250px;
+  width: 11rem;
 }
 
 @-webkit-keyframes pulse {

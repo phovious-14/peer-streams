@@ -73,7 +73,7 @@ const StreamScreen = () => {
     <div className="w-full h-full stream-screen text-black flex flex-row flex-wrap justify-around -mt-8">
       {stream?.playbackId && (
         <div className="stream-s">
-          <Player title={stream?.name} playbackId={stream?.playbackId}>
+          {/* <Player title={stream?.name} playbackId={stream?.playbackId}>
             <ControlsContainer
               middle={<Progress />}
               left={
@@ -85,15 +85,15 @@ const StreamScreen = () => {
               }
               right={<PictureInPictureButton />}
             />
-          </Player>
-          {/* <ReactPlayer
+          </Player> */}
+          <ReactPlayer
             controls
             onStart={videoStart()}
             onPause={videoStop()}
             width="100%"
             height="90%"
             url={stream.playbackUrl}
-          /> */}
+          />
         </div>
       )}
       {stream ? (

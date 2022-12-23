@@ -14,7 +14,7 @@ import {Link} from 'react-router-dom'
 
 const BannerCube = () => {
   return (
-    <div className="p-10 swipe">
+    <div className="swipe">
       <Swiper
         autoplay={{
           delay: 2500,
@@ -24,14 +24,6 @@ const BannerCube = () => {
         modules={[Autoplay, Pagination]}
         className="mySwiper swipe"
       >
-        <SwiperSlide>
-          <img src="https://www.teahub.io/photos/full/28-288661_naruto-fire-and-ice-hd-anime-wallpaper-desktop.jpg" />
-          <button className="fixed z-10 text-red-700 btn-style bottom-10 left-10 uppercase space-x-1"><Link to="/watch-stream">watch now</Link></button>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://m.media-amazon.com/images/I/81lkcwrNsmL._SX450_.jpg" />
-          <button className="fixed z-10 text-red-700 btn-style bottom-10 left-10 uppercase space-x-1">watch now</button>
-        </SwiperSlide>
         <SwiperSlide>
           <img src="https://anime-poster.com/wp-content/uploads/2021/12/Anime-Posters-Web-Banner-1920x730px.jpg" />
           <button className="fixed z-10 text-red-700 btn-style bottom-10 left-10 uppercase space-x-1">watch now</button>
