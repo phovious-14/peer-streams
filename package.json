@@ -19,7 +19,7 @@
     "alchemy-sdk": "^2.2.5",
     "antd": "^5.0.7",
     "aos": "^2.3.4",
-    "axios": "^1.2.0",
+    "axios": "^1.2.1",
     "dotenv": "^16.0.3",
     "dotenv-webpack": "^8.0.1",
     "ethers": "^5.7.2",
@@ -41,6 +41,7 @@
     "video-react": "^0.16.0",
     "wagmi": "^0.8.7",
     "web-vitals": "^2.1.4",
+    "web3": "^1.8.1",
     "web3.storage": "^4.4.0"
   },
   "scripts": {

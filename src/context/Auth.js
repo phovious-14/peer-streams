@@ -1,27 +1,43 @@
 import { createContext, useState } from "react";
-import { useAccount } from "wagmi";
+import { useAccount, useProvider } from "wagmi";
 import { ethers } from "ethers";
 import * as PushAPI from "@pushprotocol/restapi";
 import { Framework } from "@superfluid-finance/sdk-core";
 import { useNavigate } from "react-router-dom";
+import { abi } from "../config";
+import { Contract } from "ethers";
+import axios from "axios";
 
 const Auth = createContext({});
 export const AuthProvider = ({ children }) => {
-
+ 
   const { address, isConnecting, isDisconnected } = useAccount();
 
   const [video, setVideo] = useState({});
-  const [subs, setSubs] = useState("");
-  const [isPlaying, setPlaying] = useState(false)
   const [playbackId, setPlaybackId] = useState(false)
   const [loading, setLoading] = useState(false)
   const [mode, setMode] = useState('user')
+  const [channelData, setChannelData] = useState([])
+  const [streamData, setStreamData] = useState('')
+  const [nftsList, setNftsList] = useState([])
+  var nftList = []
 
   const navigate = useNavigate()
 
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const { ethereum } = window;
   const signer = provider.getSigner()
+
+  const contractAddress ='0x8A6f0FC9Fe2c13565a9db3bBE0953C334B4D4bFF';
+  const contractABI = abi;
+  const contract = new Contract(
+    contractAddress,
+    contractABI,
+    signer
+  );
+  localStorage.setItem('isPlaying', false)
+
+  let etherscan_api = '3UF719PB4C3NZ8RQCBHKSWQ4P5BJE1JCH6'
 
   async function sendNotification(title, body) {
 
@@ -76,19 +92,20 @@ export const AuthProvider = ({ children }) => {
     console.log(channelData);
   }
 
+  // deprecated
+
   async function getSubscriberList() {
     const subscribers = await PushAPI.channels._getSubscribers({
-      channel: "eip155:5:0x2AEcb6DeE3652dA1dD6b54D5fd4f7D8F43DaEb78", // channel address in CAIP
+      channel: "eip155:5:0x6f144c0628D2039f27F13604c583fAb72BEF197e", // channel address in CAIP
       env: "staging",
     });
     // let arr;
     var arr = [];
     subscribers.forEach(async (addr) => {
       const ens = await provider.lookupAddress(addr);
-      arr.push(ens);
-      // console.log(ens);
+      ens === null ? arr.push(addr) : arr.push(ens)
     });
-    setSubs(arr);
+    return arr;
   }
 
   async function getChannelList() {
@@ -98,7 +115,6 @@ export const AuthProvider = ({ children }) => {
       limit: 50, // no of items per page
       env: "staging",
     });
-    console.log(Object.getOwnPropertyNames(channelsData));
     let arr = [];
     channelsData.forEach((element) => {
       arr.push(element.channel);
@@ -109,13 +125,10 @@ export const AuthProvider = ({ children }) => {
   }
 
   async function optIntoAChannel(joinChannel) {
-    const accounts = await ethereum.request({
-      method: "eth_requestAccounts",
-    });
     await PushAPI.channels.subscribe({
       signer: signer,
       channelAddress: `eip155:5:${joinChannel}`, // channel address in CAIP
-      userAddress: `eip155:5:${accounts[0]}`, // user address in CAIP
+      userAddress: `eip155:5:${address}`, // user address in CAIP
       onSuccess: () => {
         console.log("opt in success");
       },
@@ -147,22 +160,10 @@ export const AuthProvider = ({ children }) => {
 
   //where the Superfluid logic takes place
   async function createNewFlow() {
-
     let flowRate = 10000000;
-    // const provider = new ethers.providers.Web3Provider(window.ethereum);
-    // const { ethereum } = window;
-    // if (!ethereum) {
-    //   alert("Get MetaMask!");
-    //   return;
-    // }
-    // const accounts = await ethereum.request({
-    //   method: "eth_requestAccounts",
-    // });
     console.log("Connected", address);
 
-    let recipient = '0xF13cc670E528cD7c6fDC9420f39D725E9375F98A'
-
-    // const signer = provider.getSigner();
+    let recipient = streamData.walletAddress
 
     const chainId = await window.ethereum.request({ method: "eth_chainId" });
     const sf = await Framework.create({
@@ -178,26 +179,36 @@ export const AuthProvider = ({ children }) => {
         sender: address,
         receiver: recipient,
         flowRate: flowRate,
-        superToken: DAIx,
-        // userData?: string
+        superToken: DAIx
       });
 
       console.log("Creating your stream...");
 
       const result = await createFlowOperation.exec(signer);
-      console.log(result);
 
       console.log(
         `Congrats - you've just created a money stream!
-    View Your Stream At: https://app.superfluid.finance/dashboard/${recipient}
-    Network: Kovan
-    Super Token: DAIx
-    Sender: ${address}
-    Receiver: ${recipient},
-    FlowRate: ${flowRate}
-    `
+          View Your Stream At: https://app.superfluid.finance/dashboard/${recipient}
+          Network: Kovan
+          Super Token: DAIx
+          Sender: ${address}
+          Receiver: ${recipient},
+          FlowRate: ${flowRate}
+          `
       );
+      let data;
+      const interval = setInterval(async () => {
+  
+        data = await axios.get(`https://api.etherscan.io/api?module=transaction&action=getstatus&txhash=${result.hash}&apikey=${etherscan_api}`)
+        
+        if(data.data.status === '1') {
+          localStorage.setItem('isPlaying', true)
+          clearInterval(interval) 
+        } 
 
+
+      }, 1000) 
+      // console.log(data.data.status);
       // should have same address as sender
     } catch (error) {
       console.log(
@@ -209,18 +220,8 @@ export const AuthProvider = ({ children }) => {
 
   async function deleteNetFlow() {
 
-    // const provider = new ethers.providers.Web3Provider(window.ethereum);
-    // const { ethereum } = window;
-    // if (!ethereum) {
-    //   alert("Get MetaMask!");
-    //   return;
-    // }
-    // const accounts = await ethereum.request({
-    //   method: "eth_requestAccounts",
-    // });
-
     let currentAccount = address
-    let recipient = '0xF13cc670E528cD7c6fDC9420f39D725E9375F98A'
+    let recipient = streamData.walletAddress
 
     console.log("In stream delete");
     console.log(
@@ -243,7 +244,18 @@ export const AuthProvider = ({ children }) => {
         receiver: recipient,
         //userData: 'I am Enting the Stream'
       });
-      await flowOp.exec(signer);
+      const result = await flowOp.exec(signer);
+      let data;
+      const interval = setInterval(async () => {
+  
+        data = await axios.get(`https://api.etherscan.io/api?module=transaction&action=getstatus&txhash=${result.hash}&apikey=${etherscan_api}`)
+        
+        if(data.data.status === '1') {
+          localStorage.setItem('isPlaying', false)
+          clearInterval(interval) 
+        } 
+
+      }, 1000)
     } catch (e) {
       console.log(e);
     }
@@ -284,7 +296,58 @@ export const AuthProvider = ({ children }) => {
         navigate("/");
       }
       setLoading(false)
-    //setPlaybackId(id)
+  }
+
+  const CreateChannel = async (cname, bio, twitter, discord, website) => {
+
+    const channelData = await contract.createChannel(cname, bio, twitter, discord, website);
+    await channelData.wait();
+    console.log("channelData - ", channelData.hash);
+
+  }
+
+  const getChannelData = async () => {
+    const data = await contract.getChannelInfo(address);
+
+    const result = data.filter(d => {return d !== ''})
+    console.log(result);
+    setChannelData(result)
+  }
+ 
+  const fetchNft = async () => {
+    const APIKEY = 'ckey_bcf2a8cd82204dc3a01733fa007';
+    const baseURL = 'https://api.covalenthq.com/v1';
+    const url = new URL(`${baseURL}/5/address/${address}/balances_v2/?key=${APIKEY}&nft=true`);
+    //console.log("Url = " + url)
+
+    //const url = "https://api.covalenthq.com/v1/137/address/0xDc35C75d027E4E65824cC656f655BcA90505C722/balances_v2/?key=ckey_bcf2a8cd82204dc3a01733fa007&nft=true"
+
+    const response = await fetch(url);
+    const result = await response.json();
+    const data = result.data.items;
+
+      for (var i = 0; i < data.length; i++) {
+        if(data[i].contract_address === "0x903a2684cebf15a47f32fdb2f95004caaa40da81"){
+          console.log("In Dataaa");
+          if (data[i]["nft_data"] != null) {
+            for (var j = 0; j < data[i]["nft_data"].length; j++) {
+              
+              console.log("Nft = " + data[i]["nft_data"][j].external_data["name"])
+              const name_l = data[i]["nft_data"][j].external_data["name"];
+              const description_l = data[i]["nft_data"][j].external_data["description"];
+              const image_l = data[i]["nft_data"][j].external_data["external_url"];
+              console.log("Nft Name = " + name_l + "Description =" + description_l + "image=" + image_l)
+
+              nftList.push({ id: j+1, name_l, description_l, image_l })
+            }
+
+          }
+        }
+      }
+
+      // const middle =  Math.ceil(nftList.length/2)
+      // nftList = nftList.slice(0, middle)
+      setNftsList(nftList)
   }
 
   const changeMode = () => {
@@ -313,9 +376,7 @@ export const AuthProvider = ({ children }) => {
         video,
         setVideo,
 
-        createNewFlow,
-        deleteNetFlow,
-        isPlaying,
+        createNewFlow, deleteNetFlow,
 
         changeMode,
         mode,
@@ -323,7 +384,13 @@ export const AuthProvider = ({ children }) => {
         setPlaybackId,
         playbackId,
 
-        checkFDAI, loading
+        checkFDAI, loading,
+
+        CreateChannel, getChannelData, channelData,
+
+        streamData, setStreamData,
+
+        fetchNft, nftsList, setNftsList
       }}
     >
       {children}

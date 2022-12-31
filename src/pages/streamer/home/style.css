@@ -1,18 +1,20 @@
 .home-container {
     display: flex;
-    height: 100vh;
+    height: auto;
     width: calc(100vw - 100px);
     position: absolute;
+    top: 0;
     left: 90px;
     justify-content: flex-start;
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
+    background-image: linear-gradient(to top, #c471ed, #FFFFFF);
 }
 
 .main-cont-s {
     width: 100%;
-    min-height: 100%;
+    min-height: 100vh;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -26,7 +28,7 @@
 }
 
 .main-cont-s img {
-    width: 60%;
+    width: 50%;
 }
 
 .cont1-s img {

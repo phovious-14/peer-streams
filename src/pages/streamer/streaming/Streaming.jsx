@@ -8,24 +8,56 @@ import {
 } from "@livepeer/react";
 import { useEffect } from 'react';
 import Push from '../../../components/push/Push';
-
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Auth from '../../../context/Auth';
 
 const Streaming = () => {
 
   const [videoObj, setVideoObj] = useState(JSON.parse(localStorage.getItem('videoInfo'))) 
+  const navigate = useNavigate()
+  const {address, channelData} = useContext(Auth)
+  const mintNft = async () => {
+
+    // suspend stream
+    let baseURL = `https://livepeer.studio/api/stream/${videoObj.id}`;
+    await axios.patch(baseURL, {
+      suspended : true
+    },{
+      headers : {
+        Authorization : 'Bearer 97e63c12-d479-4a79-8980-590bb6e5d0d0',
+        'Content-type' : 'application/json'
+      }
+    })
+
+    //update status
+    baseURL = `${process.env.REACT_APP_BASE_URL}/api/u_streamer`;
+    await axios.post(baseURL, {
+      walletAddress: address,
+      isStreaming: false
+    })
+
+    //remove localStorage
+    localStorage.removeItem('videoInfo');
+    setVideoObj('')
+  }
+
 
   useEffect(() => {
+    if(localStorage.getItem('videoInfo') === null) {
+      navigate('/')
+    } 
     
     if(document.getElementsByTagName("video") !== undefined) {
       const vid = document.getElementsByTagName("video")[0]
-      console.log(vid);
+      console.log(vid); 
       vid.addEventListener("play", () => {
         console.log("chalu");
-      })
+      }) 
       vid.addEventListener("pause", () => {
         console.log("band");
-      })
-    }
+      }) 
+    }   
 
   })
 
@@ -33,29 +65,26 @@ const Streaming = () => {
     <div className='streaming-cont2'>
         <div className='screen2'>
           <Player 
-            playbackId='4099iz760e53ebe2' 
+            playbackId={videoObj.plabackId} 
             title={videoObj.name} 
             showLoadingSpinner
             showTitle
             showPipButton
+            controls={false}
           />
-          <h1 className='flex w-full justify-between items-center'>{videoObj.name}  <span className="flex items-center mr-4"><EyeOutlined /> &nbsp;2.5K</span></h1>
+          <h1 className='flex w-full justify-between items-center'>{videoObj.name} </h1>
           <h1>{videoObj.info}</h1>
           <div className='streamer-acc'>
             <img src={logo} alt="" />
             <div className='ch-data'>
-              <h1>Dynamo Gaming</h1>
-              <h2>10M subscribers</h2>
+              <h1>{channelData[0]}</h1>
             </div>   
             <div className='key'>
-              <CopyToClipboard text={videoObj.id}>
-                <button>Stream ID &nbsp;&nbsp;<i class='bx bx-copy'></i></button>
-              </CopyToClipboard>
               <CopyToClipboard text={videoObj.key}>
                 <button>Stream key &nbsp;&nbsp;<i class='bx bx-copy'></i></button>
               </CopyToClipboard>
             </div>
-            <button className='mint-nft'>Mint NFT & Delete Stream</button>
+            <button className='mint-nft' onClick={mintNft}>End stream</button>
           </div>
         </div>
         <div className='data'>    

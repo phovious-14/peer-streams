@@ -106,3 +106,13 @@
     color: #0e76fd;
     background: transparent;
 }
+
+.streamer-bio {
+    background-image: linear-gradient(to left, #c471ed, #FFFFFF);
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    font-size: 1.2rem;
+}

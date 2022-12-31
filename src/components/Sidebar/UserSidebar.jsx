@@ -43,16 +43,18 @@ const UserSidebar = () => {
               </li>
 
               <li className="nav-link">
-                <a href="#">
-                  <i class='bx bx-food-menu icon'></i>
-                  <span className="text nav-text">Stream channels</span>
+                <a>
+                  <Link to="/streaming-channels">
+                    <i class='bx bx-food-menu icon'></i>
+                    <span className="text nav-text">Stream channels</span>
+                  </Link>
                 </a>
               </li>
 
               <li className="nav-link">
-                <a href="#">
-                  <i className='bx bx-bell icon'></i> 
-                  <span className="text nav-text">Notifications</span>
+                <a>
+                    <i className='bx bx-bell icon'></i> 
+                    <span className="text nav-text">Notifications</span>
                 </a>
               </li>
 
@@ -71,7 +73,7 @@ const UserSidebar = () => {
                     {address !== undefined && <header>
                         <div className="image-text">
                           <span className="image">
-                            <img src={avatar} alt="" />
+                          &nbsp;&nbsp;&nbsp;<i class='bx bx-user-circle text-3xl' ></i>
                           </span>
                         </div>
                       </header>

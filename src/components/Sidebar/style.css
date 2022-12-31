@@ -112,11 +112,6 @@ header .image-text .profession {
   justify-content: center;
 }
 
-.sidebar header .image img {
-  width: 40px;
-  border-radius: 6px;
-}
-
 .sidebar header .toggle {
   position: absolute;
   top: 50%;

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './style.css'
 import { useContext } from 'react'
 import Auth from '../../context/Auth'
@@ -6,37 +6,20 @@ import Auth from '../../context/Auth'
 const StreamerSubs = () => {
 
   const {getSubscriberList} = useContext(Auth)
+  const [subs, setSubs] = useState([])
 
   useEffect(() => {
-    getSubscriberList()
-  })
+    getSubscriberList().then(data => setSubs(data))
+  }, [])
 
   return (
     <div className='streamer-subs'>
         <div className='subs-list'>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
-            <p>krishn.eth</p>
+            {
+              subs.length !== 0 && subs.map((item) => (
+                <p>{item}</p>
+              ))
+            }
         </div>
     </div>
   )

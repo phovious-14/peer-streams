@@ -8,24 +8,35 @@ import { useState } from 'react';
 import logo from '../../../assets/logo.png'
 import Card from '../../../components/Card/Card'
 import {EyeOutlined} from '@ant-design/icons';
+import axios from 'axios';
  
 const LiveStreaming = () => {
 
-  const {createNewFlow, deleteNetFlow, checkFDAI, loading} = useContext(Auth)
-  const [videoObj, setVideoObj] = useState(JSON.parse(localStorage.getItem('videoInfo')))
+  const {createNewFlow, deleteNetFlow, checkFDAI, streamData, optIntoAChannel } = useContext(Auth)
   
-  useEffect(() => {
-
+  useEffect(() => { 
+ 
     checkFDAI()
     const vid = document.getElementsByTagName("video")[0]
-    console.log(vid); 
-    vid.addEventListener("play", () => {
-      // console.log();
-      createNewFlow()
-    })
-    vid.addEventListener("pause", () => {
-      deleteNetFlow()
-    }) 
+    console.log(vid)   
+
+    vid.addEventListener("play", async() => {
+      if(localStorage.getItem('isPlaying') === 'false') {        
+        console.log('play');
+        vid.pause();   
+        await createNewFlow()    
+        setTimeout(() => { vid.play() }, 5000)    
+      }    
+    })        
+             
+    vid.addEventListener("pause", async () => {
+
+      if(localStorage.getItem('isPlaying') === 'true') {
+        deleteNetFlow()   
+      }  
+
+    })     
+
   }, [])
 
   return (
@@ -33,21 +44,21 @@ const LiveStreaming = () => {
       <div className='streaming-cont2'>
             <div className='screen2'>
               <Player 
-                playbackId='4099iz760e53ebe2' 
-                title={videoObj.name} 
+                playbackId={streamData.playbackId}
+                title={streamData.streamName} 
                 showLoadingSpinner
                 showTitle
                 showPipButton
               />
-              <h1 className='flex w-full justify-between items-center'>{videoObj.name}  <span className="flex items-center mr-4"><EyeOutlined /> &nbsp;2.5K</span></h1>
-              <h1>{videoObj.info}</h1>
+              <h1 className='flex w-full justify-between items-center'>{streamData.streamName}  <span className="flex items-center mr-4"><EyeOutlined /> &nbsp;2.5K</span></h1>
+              <h1>{streamData.streamInfo}</h1>
               <div className='streamer-acc2'>
                 <img src={logo} alt="" />
                 <div className='ch-data'>
                   <h1>Dynamo Gaming</h1>
                   <h2>10M subscribers</h2>
                 </div>
-                <button className='sub-btn'>
+                <button className='sub-btn' onClick={() => optIntoAChannel(streamData.walletAddress)}>
                   <i class='bx bx-bell'></i>&nbsp; Subscribe
                 </button>
               </div>

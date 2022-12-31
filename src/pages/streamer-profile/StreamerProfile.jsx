@@ -4,31 +4,55 @@ import { Link, Route, Routes } from 'react-router-dom'
 import logo from '../../assets/logo.png'
 import Card from '../../components/Card/Card'
 import Posts from '../../components/Posts/Posts'
+import { useContext } from 'react'
+import Auth from '../../context/Auth'
+import { useEffect } from 'react'
 
 const StreamerProfile = () => {
 
     const [btn, setBtn] = useState('posts');
+    const {channelData, getChannelData, address, fetchNft } = useContext(Auth)
+
+    useEffect(() => {
+      fetchNft()
+    }, [])
 
   return (
     <div className='streamer-profile'>
         <div className='streamer-acc3'>
             <img src={logo} alt="" />
             <div className='ch-data'>
-              <h1>Dynamo Gaming</h1>
-              <h2>10M subscribers</h2>
+              <h1> {channelData[0]}</h1>
             </div>
+            {
+              channelData.length === 0 && 
+              <button className='sub-btn' >
+                <Link to="/create-channel"><i class='bx bx-bell'></i>&nbsp; Become a creator</Link> 
+              </button>
+            }
+
             <button className='sub-btn'>
               <i class='bx bx-bell'></i>&nbsp; Subscribe
             </button>
         </div>
+        <div className='streamer-bio'>
+          <p>{channelData[1]}</p>
+        </div>
         <div className='streamer-detail'>
-          <p><i class='bx bx-user'></i> &nbsp; romanreigns.lens</p>
-          <p><i class='bx bx-wallet-alt' ></i>&nbsp; 0x6f144c0628D2039f27F13604c583fAb72BEF197e</p>
+          <p>
+            <a href={channelData[2]}><i class='bx bxl-twitter'></i></a>
+             &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href={channelData[3]}><i class='bx bxl-discord-alt' ></i></a>
+             &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href={channelData[4]} title='portfolio'><i class='bx bx-link'></i></a>
+             &nbsp;
+          </p>
+          <p><i class='bx bx-wallet-alt' ></i>&nbsp; {address}</p>
         </div>
         <div className='streamer-more'>
             <div className='nav'>
                 <button onClick={() => setBtn('posts')}>Post</button>
-                <button onClick={() => setBtn('nfts')}>Recorded streams</button>
+                <button onClick={() => setBtn('nfts')}>Minted streams</button>
             </div>
             {btn === 'posts'
                 ? <Posts />

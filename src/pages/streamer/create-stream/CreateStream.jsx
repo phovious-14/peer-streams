@@ -7,6 +7,7 @@ import {
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import bg from '../../../assets/Launch.png'
+import axios from "axios";
 
 const CreateStream = () => {
 
@@ -20,24 +21,60 @@ const CreateStream = () => {
     status,
   } = useCreateStream(streamName ? { name: streamName, record: true } : null);
 
-  const { setVideo } = useContext(Auth);
+  const { setVideo, channelData, address } = useContext(Auth);
+
   const submitForm = async (e) => {
-    e.preventDefault();
+
+    e.preventDefault();  
     createStream?.();
+
   };
 
   useEffect(() => {
-    if(localStorage.getItem('videoInfo') !== null){
-      navigate('/streaming-mode')
-    }
-    if(stream !== undefined){
-      if(stream.streamKey!==undefined){
-        let obj = {name: streamName, info: streamInfo, key: stream.streamKey, id: stream.playbackId, url: stream.playbackUrl};
-        localStorage.setItem('videoInfo', JSON.stringify(obj))
-        setVideo(obj)
-        navigate("/streaming-mode")
+    const selfCall = async () => {
+
+      if(channelData === 0) {
+        alert('Set channel first !!!')
+        navigate('/create-channel')
       }
+      if(localStorage.getItem('videoInfo') !== null){
+        navigate('/streaming-mode')
+      }
+
+      if(stream !== undefined){
+        if(stream.streamKey!==undefined){
+          let obj = {name: streamName, info: streamInfo, key: stream.streamKey, id: stream.id, plabackId: stream.playbackId, url: stream.playbackUrl};
+          
+          let baseURL = `${process.env.REACT_APP_BASE_URL}/api/streamer/${address}`;
+          const data = await axios.get(baseURL)
+          console.log(data.data);
+          if (data.data) {      
+            baseURL = `${process.env.REACT_APP_BASE_URL}/api/u_streamer`;
+            const data = await axios.post(baseURL, {
+              walletAddress:address,
+              streamName,
+              streamInfo,
+              playbackId: stream.playbackId,
+              isStreaming: true
+            })
+            console.log(data);
+          } else {
+            baseURL = `${process.env.REACT_APP_BASE_URL}/api/streamer`;
+            const data = await axios.post(baseURL, {
+              walletAddress:address,
+              streamName,
+              streamInfo,
+              playbackId: stream.playbackId
+            })
+            console.log(data);
+          }
+          localStorage.setItem('videoInfo', JSON.stringify(obj))
+          setVideo(obj)
+          navigate("/streaming-mode")
+        }
+      } 
     }
+    selfCall()
   })
   
 
@@ -58,7 +95,6 @@ const CreateStream = () => {
             placeholder="Stream info"
             onChange={(e) => setStreamInfo(e.target.value)}
           />
-          <input type="file" name="image-banner" />
           <button
             type="submit"
             variant="primary"

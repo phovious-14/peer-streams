@@ -8,7 +8,7 @@ import logo from "../../assets/newlogo2.png";
 import { Link } from "react-router-dom";
 
 const StreamerSidebar = () => {
-  const { changeMode, address } = useContext(Auth);
+  const { changeMode, address, getChannelData } = useContext(Auth);
 
   return (
     <>
@@ -35,6 +35,14 @@ const StreamerSidebar = () => {
                 <Link to="create-stream">
                     <i class='bx bx-video-plus icon'></i>
                     <span className="text nav-text">Create stream</span>
+                </Link>
+              </a>
+            </li>
+            <li className="nav-link">
+              <a>
+                <Link to="mint-streams">
+                <i class='bx bxs-videos icon'></i>
+                    <span className="text nav-text">Mint Streams</span>
                 </Link>
               </a>
             </li>
@@ -70,7 +78,7 @@ const StreamerSidebar = () => {
                     {address !== undefined && <header>
                         <div className="image-text">
                           <span className="image">
-                            <Link to="/streamer-profile"> <img src={avatar} alt="" /></Link>
+                            <Link to="/streamer-profile">&nbsp;&nbsp;&nbsp;<i class='bx bx-user-circle text-3xl' ></i></Link>
                           </span>
                         </div>
                       </header>

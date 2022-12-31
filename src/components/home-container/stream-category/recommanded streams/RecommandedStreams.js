@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
@@ -6,18 +6,28 @@ import "swiper/css";
 import "swiper/css/pagination";
 import {EyeOutlined} from '@ant-design/icons';
 import "./style.css";
-
+import axios from "axios";
 // import required modules
 import { Navigation } from "swiper";
+import Auth from "../../../../context/Auth";
+import { Link } from "react-router-dom";
 const RecommandedStreams = () => {
 
   const [width, setWidth] = useState(4)
+  const {setStreamData, streamData, channelData} = useContext(Auth)
 
   useEffect(() => {
     let w = window.screen.width
+    const selfCall = async () => {
+      const baseURL = `${process.env.REACT_APP_BASE_URL}/api/live`;
+      const data = await axios.get(baseURL)
+      setStreamData(data.data)
+    }
+    selfCall()
+    console.log(streamData);
     setWidth(w>768 ? 4 : 1)
-    console.log(width);
-  })
+
+  }, [])
 
   return (
     <div className="recomm-slider">
@@ -29,80 +39,21 @@ const RecommandedStreams = () => {
         modules={[Navigation]}
         className="mySwiper"
       >
-        <SwiperSlide>
-            <img src="https://wallpaperaccess.com/full/1133687.jpg" alt="" />
+        {
+          streamData instanceof Array && streamData.map(data => (
+          <SwiperSlide>
+            <Link to="/watching-stream" onClick={() => setStreamData(data)}>
             <div className="slider-cont">
               <h1 className="flex">
-                Dynamo live streaming...
+                {data.streamName}
               </h1>
-              <div className="slider-cont2">                
-                <h1>Updated 17.12.2022</h1>
-                <h1 className="flex items-center"><EyeOutlined /> &nbsp;2.5K</h1>
+              <div className="slider-cont2">  
               </div>
             </div>
-        </SwiperSlide>
-        <SwiperSlide>
-            <img src="https://whatifgaming.com/wp-content/uploads/2021/10/Dominic-Barrios.jpg" alt="" />
-            <div className="slider-cont">
-              <h1 className="flex">
-                Dynamo live streaming...
-              </h1>
-              <div className="slider-cont2">                
-                <h1>Updated 17.12.2022</h1>
-                <h1 className="flex items-center"><EyeOutlined /> &nbsp;2.5K</h1>
-              </div>
-            </div>
-        </SwiperSlide>
-        <SwiperSlide>
-            <img src="https://vidooly.com/blog/wp-content/uploads/2019/06/mixer-costream.jpg" alt="" />
-            <div className="slider-cont">
-              <h1 className="flex">
-                Dynamo live streaming...
-              </h1>
-              <div className="slider-cont2">                
-                <h1>Updated 17.12.2022</h1>
-                <h1 className="flex items-center"><EyeOutlined /> &nbsp;2.5K</h1>
-              </div>
-            </div>
-        </SwiperSlide>
-        <SwiperSlide>
-            <img src="https://www.redappletech.com/wp-content/uploads/2020/09/Blog_post_02-min.jpg" alt="" />
-            <div className="slider-cont">
-              <h1 className="flex">
-                Dynamo live streaming...
-              </h1>
-              <div className="slider-cont2">                
-                <h1>Updated 17.12.2022</h1>
-                <h1 className="flex items-center"><EyeOutlined /> &nbsp;2.5K</h1>
-              </div>
-            </div>
-        </SwiperSlide>
-        <SwiperSlide>
-            <img src="https://cdn.pocket-lint.com/r/s/970x/assets/images/135620-apps-news-youtube-gaming-now-supports-android-live-streaming-and-paid-subscriptions-image1-nyfvwquxgm-png.webp" alt="" />
-          
-            <div className="slider-cont">
-              <h1 className="flex">
-                Dynamo live streaming...
-              </h1>
-              <div className="slider-cont2">                
-                <h1>Updated 17.12.2022</h1>
-                <h1 className="flex items-center"><EyeOutlined /> &nbsp;2.5K</h1>
-              </div>
-            </div>
-        </SwiperSlide>
-        <SwiperSlide>
-            <img src="https://s.yimg.com/ny/api/res/1.2/2VMzj_.OzCHYJccbjZAoLA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTU5OTtjZj13ZWJw/https://media.zenfs.com/en-US/quartz.com/af4e7f8dfa83f643b8a00393f3ad8441" alt="" />
-          
-            <div className="slider-cont">
-              <h1 className="flex">
-                Dynamo live streaming...
-              </h1>
-              <div className="slider-cont2">                
-                <h1>Updated 17.12.2022</h1>
-                <h1 className="flex items-center"><EyeOutlined /> &nbsp;2.5K</h1>
-              </div>
-            </div>
-        </SwiperSlide>
+            </Link>
+          </SwiperSlide>
+          ))
+        }
       </Swiper>
     </div>
   )

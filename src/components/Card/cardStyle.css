@@ -83,7 +83,7 @@
     transition: .3s;
   }
 
-  .card img {
+  .card video {
     width: 100%;
     height: auto;
     border-radius: 20px;
