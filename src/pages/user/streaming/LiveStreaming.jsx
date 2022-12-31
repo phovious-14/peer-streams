@@ -19,7 +19,7 @@ const LiveStreaming = () => {
     checkFDAI()
     const vid = document.getElementsByTagName("video")[0]
     console.log(vid)   
-
+ 
     vid.addEventListener("play", async() => {
       if(localStorage.getItem('isPlaying') === 'false') {        
         console.log('play');

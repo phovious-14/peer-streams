@@ -37,7 +37,7 @@ const MintStreams = () => {
         
             const data = await axios.get(baseURL, {
                 headers:{
-                    Authorization : 'Bearer 934fb87d-04e8-49b4-8434-517da5cbf9d4'
+                    Authorization : `Bearer ${process.env.REACT_APP_BEARE_TOKEN_1}`
                 }
             })
             console.log(data);
