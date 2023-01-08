@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import Auth from '../../context/Auth';
 import avatar from "../../assets/thunder.png";
 import { Link } from 'react-router-dom';
-
+import { queryExample, queryPub, profile } from '../../lens';
 const UserSidebar = () => {
 
     const {changeMode, address} = useContext(Auth)

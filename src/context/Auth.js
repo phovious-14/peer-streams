@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(false)
   const [mode, setMode] = useState('user')
   const [channelData, setChannelData] = useState([])
+  const [posts, setPosts] = useState([])
   const [streamData, setStreamData] = useState('')
   const [nftsList, setNftsList] = useState([])
   var nftList = []
@@ -390,7 +391,9 @@ export const AuthProvider = ({ children }) => {
 
         streamData, setStreamData,
 
-        fetchNft, nftsList, setNftsList
+        fetchNft, nftsList, setNftsList,
+
+        setPosts, posts
       }}
     >
       {children}

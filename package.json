@@ -38,6 +38,7 @@
     "react-video-js-player": "^1.1.1",
     "rsuite": "^5.23.1",
     "swiper": "^8.4.5",
+    "urql": "^3.0.3",
     "video-react": "^0.16.0",
     "wagmi": "^0.8.7",
     "web-vitals": "^2.1.4",

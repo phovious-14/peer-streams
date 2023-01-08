@@ -7,11 +7,18 @@ import Posts from '../../components/Posts/Posts'
 import { useContext } from 'react'
 import Auth from '../../context/Auth'
 import { useEffect } from 'react'
+import { queryPub } from '../../lens'
 
 const StreamerProfile = () => {
 
     const [btn, setBtn] = useState('posts');
-    const {channelData, getChannelData, address, fetchNft } = useContext(Auth)
+    const {channelData, getChannelData, address, fetchNft, setPosts, posts } = useContext(Auth)
+
+    const getposts = async() => {
+      const data = await queryPub(address)
+      setPosts(data)
+      setBtn('posts')
+    }
 
     useEffect(() => {
       fetchNft()
@@ -51,7 +58,7 @@ const StreamerProfile = () => {
         </div>
         <div className='streamer-more'>
             <div className='nav'>
-                <button onClick={() => setBtn('posts')}>Post</button>
+                <button onClick={getposts}>Post</button>
                 <button onClick={() => setBtn('nfts')}>Minted streams</button>
             </div>
             {btn === 'posts'

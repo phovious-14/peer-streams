@@ -27,7 +27,7 @@ const LiveStreaming = () => {
         await createNewFlow()    
         setTimeout(() => { vid.play() }, 5000)    
       }    
-    })        
+    })           
              
     vid.addEventListener("pause", async () => {
 

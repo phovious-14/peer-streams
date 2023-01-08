@@ -82,8 +82,7 @@ const StreamerSidebar = () => {
                           </span>
                         </div>
                       </header>
-                    }
-                                      
+                    }                                      
                   </span>
                 </a>
             </li>
