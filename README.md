@@ -1,12 +1,13 @@
 <b><h2>The problem PeerStreams solves</b></h2>
 It is a Live Streaming Platform build on Livepeer for content creators , Events , Shows , Live classes and many more.
 
-Youtube Timestamps :
-Link : https://youtu.be/H3WPV93_5uo
-Introduction : 0:08 - 2:56
-Live Site Demo : 3:10
-SuperFluid demo : 6:18 to 7:11
-LivePeer Video Nfts: 8:20 to 10:00
+<b>Detailed Demo </b>
+Youtube Timestamps :<br>
+Link : https://youtu.be/H3WPV93_5uo<br>
+Introduction : 0:08 - 2:56<br>
+Live Site Demo : 3:10<br>
+SuperFluid demo : 6:18 to 7:11<br>
+LivePeer Video Nfts: 8:20 to 10:00<br>
 
 Superfluid's Usecase:
 -> We believe in Pay as You Watch model so for every second you watch stream ,money is being deducted from your account and deposited into the Streamers Account when you decide to leave the stream.
