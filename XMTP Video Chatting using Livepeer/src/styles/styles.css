@@ -1,0 +1,185 @@
+body {
+  color: #252525;
+}
+
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+h3 {
+  margin: 8px 0px;
+}
+
+.align-center {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.flex-dir-col {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.justify-start {
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.align-start {
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+
+.justify-between {
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.justify-center {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.flex-1 {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.home {
+  width: 100%;
+  height: 100vh;
+}
+
+.header {
+  padding: 12px 20px;
+  width: -webkit-fill-available;
+  width: -moz-available;
+}
+
+.card {
+  width: 40%;
+  padding: 16px;
+  -webkit-box-shadow: 0px 0px 10px 10px #d4d4d4;
+  box-shadow: 0px 0px 10px 10px #d4d4d4;
+  border: 1px solid lightgrey;
+  border-radius: 16px;
+  margin: 0px 16px;
+}
+
+@media only screen and (max-width: 1200px) {
+  .card {
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .card {
+    width: -webkit-fill-available;
+  }
+
+  .header-mobile {
+    flex-direction: column;
+  }
+
+  .header-mobile > button {
+    margin-left: 0px;
+  }
+}
+
+.btn {
+  border: 1px solid lightgrey;
+  background: transparent;
+  color: gray;
+  padding: 8px 20px;
+  border-radius: 8px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  cursor: pointer;
+  margin-left: 12px;
+}
+
+.identicon {
+  border: 2px solid darkgrey;
+  border-radius: 50%;
+  height: 32px;
+  width: 32px;
+  min-height: 32px;
+  min-width: 32px;
+  max-height: 32px;
+  max-width: 32px;
+  margin-right: 16px;
+  background-color: #252525;
+}
+
+.conversation-header {
+  margin-bottom: 8px;
+  border-bottom: 1px solid gray;
+  padding-bottom: 8px;
+  cursor: pointer;
+  margin-right: 16px;
+}
+
+.conversation-list {
+  max-height: 70vh;
+  overflow: auto;
+}
+
+.msg-header {
+  margin-left: 32px;
+  margin-bottom: 12px;
+}
+
+.msgs-container {
+  margin-top: 12px;
+  height: 60vh;
+  overflow: auto;
+}
+
+.back-chevron {
+  font-size: 40px;
+  height: 40px;
+  width: 20px;
+  margin-right: 12px;
+  align-items: flex-end;
+}
+
+.text-input {
+  border: 1px solid lightgrey;
+  background: transparent;
+  color: gray;
+  padding: 8px 20px;
+  border-radius: 8px;
+  width: -webkit-fill-available;
+  width: -moz-available;
+}
+
+.convo-info {
+  text-align: left;
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+
+.logo {
+  width: 100px;
+}
+
+.new-address {
+  font-size: 12px;
+  color: #ff5656;
+  margin-top: 8px;
+  text-align: start;
+  margin-left: 4px;
+}
