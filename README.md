@@ -4,13 +4,7 @@ It is a Live Streaming Platform build on Livepeer for content creators , Events 
 <b>Detailed Demo </b>
 Youtube Timestamps :<br>
 Link : https://youtu.be/ye007N7lZXc
-Timestamps:
-0:00 to 0:31 = Introductions
-0:32 to 2:00 = Push & Streaming using LIvePeer Demo
-2:01 to 3:08 = SuperFluid demo
-3:19 to 3:58 = NFT Page & NFT Video
-3:59 to 4:19 = Lens Protocol
-4:20 to 6:16 = XMTP chatting using LivePeer Demo
+
 
 LivePeer's Usecase :<br>
 -> The streamer can Live stream using Livepeer using the StreamID and the Stream URL which we are generating in our platform and then give that URL and ID to OBS and then the stream will be started.<br>
