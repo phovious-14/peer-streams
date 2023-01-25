@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
   const { ethereum } = window;
   const signer = provider.getSigner()
 
-  const contractAddress ='0x8A6f0FC9Fe2c13565a9db3bBE0953C334B4D4bFF';
+  const contractAddress ='0x9f8f41c498fa7eEAfA0D2Bb116bB30e95cf12457';
   const contractABI = abi;
   const contract = new Contract(
     contractAddress,
