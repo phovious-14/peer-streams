@@ -2,7 +2,6 @@ import React, {useContext, useState } from 'react'
 import './style.css'
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import logo from '../../../assets/Binge.png'
-import {EyeOutlined} from '@ant-design/icons';
 import {
   Player
 } from "@livepeer/react";

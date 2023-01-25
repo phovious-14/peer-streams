@@ -1,42 +1,50 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './style.css'
 import { Player } from "@livepeer/react";
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import Auth from '../../../context/Auth';
-import { useState } from 'react';
 import logo from '../../../assets/logo.png'
 import Card from '../../../components/Card/Card'
 import {EyeOutlined} from '@ant-design/icons';
-import axios from 'axios';
  
 const LiveStreaming = () => {
 
-  const {createNewFlow, deleteNetFlow, checkFDAI, streamData, optIntoAChannel } = useContext(Auth)
+  const { createNewFlow, deleteNetFlow, checkFDAI, streamData, optIntoAChannel } = useContext(Auth)
+
+  var flag = true;
   
   useEffect(() => { 
+  
+    //check extra property, 
+    checkFDAI() 
+
+      setTimeout(() => {
+
+        const vid = document.getElementsByTagName("video")[0]        
+        
+        console.log(vid.getAttribute('data-metrics-initialized'));
+        if(vid.getAttribute('data-metrics-initialized') && flag ) {
+          console.log(vid);
+          vid.addEventListener("play", async() => {
+            if(localStorage.getItem('isPlaying') === 'false') {        
+              console.log('play');
+              vid.pause();   
+              await createNewFlow()    
+              setTimeout(() => { vid.play() }, 5000)    
+            }   
+          })       
+                
+          vid.addEventListener("pause", async () => {
+            if(localStorage.getItem('isPlaying') === 'true') {
+              deleteNetFlow()   
+            }  
+          })    
+          flag = false; 
+        }
+        
+    }, 2000) 
  
-    checkFDAI()
-    const vid = document.getElementsByTagName("video")[0]
-    console.log(vid)   
- 
-    vid.addEventListener("play", async() => {
-      if(localStorage.getItem('isPlaying') === 'false') {        
-        console.log('play');
-        vid.pause();   
-        await createNewFlow()    
-        setTimeout(() => { vid.play() }, 5000)    
-      }    
-    })           
-             
-    vid.addEventListener("pause", async () => {
-
-      if(localStorage.getItem('isPlaying') === 'true') {
-        deleteNetFlow()   
-      }  
-
-    })     
-
   }, [])
 
   return (

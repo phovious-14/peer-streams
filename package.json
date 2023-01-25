@@ -23,6 +23,7 @@
     "dotenv": "^16.0.3",
     "dotenv-webpack": "^8.0.1",
     "ethers": "^5.7.2",
+    "jquery": "^3.6.3",
     "react": "^18.2.0",
     "react-animated-cursor": "^2.5.2",
     "react-bootstrap": "^2.6.0",
@@ -47,7 +48,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "cross-env GENERATE_SOURCEMAP=false react-scripts build",
+    "winBuild": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

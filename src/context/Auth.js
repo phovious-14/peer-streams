@@ -279,7 +279,7 @@ export const AuthProvider = ({ children }) => {
       const result = await response.json();
       const data = result.data.items;
       console.log(APIKEY);
-      var flag = 0;
+      var flag = 0;  
       for (var i = 0; i < data.length; i++) {
         if(data[i]["contract_address"] === stk){//5$
           flag = 1;
@@ -290,7 +290,6 @@ export const AuthProvider = ({ children }) => {
           console.log("You are less on Super Tokens");
           break;
         }
-        
       }
       if(flag === 0){
         alert("You don't have Super Tokens to watch stream");
@@ -319,8 +318,6 @@ export const AuthProvider = ({ children }) => {
     const APIKEY = 'ckey_bcf2a8cd82204dc3a01733fa007';
     const baseURL = 'https://api.covalenthq.com/v1';
     const url = new URL(`${baseURL}/5/address/${address}/balances_v2/?key=${APIKEY}&nft=true`);
-    //console.log("Url = " + url)
-
     //const url = "https://api.covalenthq.com/v1/137/address/0xDc35C75d027E4E65824cC656f655BcA90505C722/balances_v2/?key=ckey_bcf2a8cd82204dc3a01733fa007&nft=true"
 
     const response = await fetch(url);
