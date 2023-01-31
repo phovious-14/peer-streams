@@ -82,12 +82,8 @@ export const AuthProvider = ({ children }) => {
   }
 
   async function getSubscribedChannels() {
-    const accounts = await ethereum.request({
-      method: "eth_requestAccounts",
-    });
-
     const channelData = await PushAPI.channels.getChannel({
-      channel: `eip155:5:${accounts[0]}`, // channel address in CAIP
+      channel: `eip155:5:${address}`, // channel address in CAIP
       env: "staging",
     });
     console.log(channelData);
@@ -97,7 +93,7 @@ export const AuthProvider = ({ children }) => {
 
   async function getSubscriberList() {
     const subscribers = await PushAPI.channels._getSubscribers({
-      channel: "eip155:5:0x6f144c0628D2039f27F13604c583fAb72BEF197e", // channel address in CAIP
+      channel: `eip155:5:${address}`, // channel address in CAIP
       env: "staging",
     });
     // let arr;

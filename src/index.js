@@ -10,23 +10,30 @@ import {
   createReactClient,
   studioProvider,
 } from "@livepeer/react";
-
+import Web3Modal from "web3modal";
 const livepeerClient = createReactClient({
   provider: studioProvider({    
     apiKey: process.env.REACT_APP_LIVEPEER_API,    
   }),
 });
 
+const web3Modal = new Web3Modal({
+  network: "goerli",
+  cacheProvider: true,
+})
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <LivepeerConfig client={livepeerClient}>
-      <Router>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </Router>
-    </LivepeerConfig>
+    <web3Modal>
+      <LivepeerConfig client={livepeerClient}>
+        <Router>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </Router>
+      </LivepeerConfig>
+    </web3Modal>
   </React.StrictMode>
 );
 

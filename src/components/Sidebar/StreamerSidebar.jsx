@@ -1,5 +1,4 @@
 import React from "react";
-import avatar from "../../assets/thunder.png";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Switch, Space } from "antd";
 import { useContext } from "react";
@@ -52,6 +51,15 @@ const StreamerSidebar = () => {
                 <Link to="/subscribers">
                   <i class='bx bx-bullseye icon'></i>
                   <span className="text nav-text">Subscribers</span>
+                </Link>
+              </a>
+            </li>
+
+            <li className="nav-link">
+              <a>
+                <Link to="/giveaway">
+                  <i class='bx bx-gift icon'></i>
+                  <span className="text nav-text">Giveaway</span>
                 </Link>
               </a>
             </li>

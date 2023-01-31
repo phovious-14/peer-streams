@@ -7,9 +7,6 @@ import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
-import Channels from "./components/channels/Channels";
-import Subscribers from "./components/subscribers/Subscribers";
-import WatchStream from "./components/watchSream/WatchStream";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Home from "./pages/user/home/Home";
 import { useContext, useEffect } from 'react'
@@ -23,6 +20,7 @@ import StreamerSubs from "./pages/stream-subscribers/StreamerSubs";
 import CreateChannel from "./pages/streamer-profile/createChannel/CreateChannel";
 import StreamChannels from "./pages/user/channel-list/StreamChannels";
 import MintStreams from "./pages/streamer/mint-streams/MintStreams";
+import Giveaway from "./pages/streamer/Giveaway/Giveaway";
 
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum, chain.goerli],
@@ -74,6 +72,7 @@ function App() {
                   <Route path="/subscribers" element={<StreamerSubs />} />
                   <Route path="/create-channel" element={<CreateChannel />} />
                   <Route path="/mint-streams" element={<MintStreams />} />
+                  <Route path="/giveaway" element={<Giveaway />} />
                   
                 </>
             }

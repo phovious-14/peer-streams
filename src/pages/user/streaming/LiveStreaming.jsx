@@ -7,10 +7,16 @@ import Auth from '../../../context/Auth';
 import logo from '../../../assets/logo.png'
 import Card from '../../../components/Card/Card'
 import {EyeOutlined} from '@ant-design/icons';
- 
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { ethers } from 'ethers';
+import { Framework } from '@superfluid-finance/sdk-core';
+import { daiABI } from './config';
+
 const LiveStreaming = () => {
 
   const { createNewFlow, deleteNetFlow, checkFDAI, streamData, optIntoAChannel } = useContext(Auth)
+  const [amt, setAmt] = useState('')
 
   var flag = true;
   
@@ -47,6 +53,120 @@ const LiveStreaming = () => {
  
   }, [])
 
+  async function executeBatchCall(upgradeAmt, recipient, flowRate) {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+  
+    const signer = provider.getSigner();
+  
+    const chainId = await window.ethereum.request({ method: "eth_chainId" });
+    const sf = await Framework.create({
+      chainId: Number(chainId),
+      provider: provider
+    });
+  
+    const superSigner = sf.createSigner({ signer: signer });
+  
+    console.log(signer);
+    console.log(await superSigner.getAddress());
+    const DAIx = await sf.loadSuperToken("fDAIx");
+  
+    console.log(DAIx);
+  
+    try {
+      const amtToUpgrade = ethers.utils.parseEther(upgradeAmt.toString());
+      const upgradeOperation = DAIx.upgrade({
+        amount: amtToUpgrade.toString()
+      });
+      //upgrade and create stream at once
+      const createFlowOperation = DAIx.createFlow({
+        sender: "0xDCB45e4f6762C3D7C61a00e96Fb94ADb7Cf27721",
+        receiver: recipient,
+        flowRate: flowRate
+      });
+  
+      console.log("Upgrading tokens and creating stream...");
+  
+      await sf
+        .batchCall([upgradeOperation, createFlowOperation])
+        .exec(signer)
+        .then(function (tx) {
+          console.log(
+            `Congrats - you've just successfully executed a batch call!
+            You have completed 2 operations in a single tx 🤯
+            View the tx here:  https://goerli.etherscan.io/tx/${tx.hash}
+            View Your Stream At: https://app.superfluid.finance/dashboard/${recipient}
+            Network: Goerli
+            Super Token: DAIx
+            Sender: 0xDCB45e4f6762C3D7C61a00e96Fb94ADb7Cf27721
+            Receiver: ${recipient},
+            FlowRate: ${flowRate}
+            `
+          );
+        });
+    } catch (error) {
+      console.log(
+        "Hmmm, your transaction threw an error. Make sure that this stream does not already exist, and that you've entered a valid Ethereum address!"
+      );
+      console.error(error);
+    }
+  }
+
+  async function daiApprove(approveAmount) {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+  
+    const signer = provider.getSigner();
+  
+    const chainId = await window.ethereum.request({ method: "eth_chainId" });
+    const sf = await Framework.create({
+      chainId: Number(chainId),
+      provider: provider
+    });
+  
+    const superSigner = sf.createSigner({ signer: signer });
+  
+    console.log(signer);
+    console.log(await superSigner.getAddress());
+    const daix = await sf.loadSuperToken("fDAIx");
+  
+    console.log(daiABI);
+  
+    const DAI = new ethers.Contract(
+      "0x88271d333C72e51516B67f5567c728E702b3eeE8",
+      daiABI,
+      signer
+    );
+  
+    console.log(DAI);
+    try {
+      console.log("approving DAI spend");
+      await DAI.approve(
+        "0xF2d68898557cCb2Cf4C10c3Ef2B034b2a69DAD00",
+        ethers.utils.parseEther(approveAmount.toString())
+      ).then(function (tx) {
+        console.log(
+          `Congrats, you just approved your DAI spend. You can see this tx at https://goerli.etherscan.io/tx/${tx.hash}`
+        );
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const notify = (e) => {
+
+    e.preventDefault()
+
+    // daiApprove(100000000000000000000)
+    executeBatchCall(amt, streamData.walletAddress, 100000000000)
+
+    toast.success(`Donated successfully`, {
+      position: toast.POSITION.TOP_CENTER
+    });
+
+  }
+
   return (
     <>
       <div className='streaming-cont2'>
@@ -70,12 +190,20 @@ const LiveStreaming = () => {
                   <i class='bx bx-bell'></i>&nbsp; Subscribe
                 </button>
               </div>
+              
+            <div className='donation'>
+              <form>
+                <input type='text' placeholder='Amount' onChange={ (e) => setAmt(e.target.value)} />
+                <button className='btn-style' onClick={notify}>Donate</button>
+              </form>
+            </div>
             </div>
             <div className='data2'>
               <p className='title'><i class='bx bx-data'></i> &nbsp;Recorded NFT Videos</p>
               <Card />
             </div>
         </div>
+        <ToastContainer autoClose={7000} />
     </>
   )
 }

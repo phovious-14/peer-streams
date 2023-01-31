@@ -21,6 +21,7 @@ const RecommandedStreams = () => {
     const selfCall = async () => {
       const baseURL = `${process.env.REACT_APP_BASE_URL}/api/live`;
       const data = await axios.get(baseURL)
+      console.log(data);
       setStreamData(data.data)
     }
     selfCall()

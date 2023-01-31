@@ -145,6 +145,10 @@
     width: 90%;
 }
 
-form input {
+.data form input {
     width: 90%;
+}
+
+.donation form {
+    height: 100px;
 }
