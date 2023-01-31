@@ -24,7 +24,7 @@ const Streaming = () => {
       suspended : true
     },{
       headers : {
-        Authorization : `Bearer ${process.env.REACT_APP_BEARE_TOKEN_2}`,
+        Authorization : `Bearer ${process.env.REACT_APP_BEARE_TOKEN_1}`,
         'Content-type' : 'application/json'
       }
     })
