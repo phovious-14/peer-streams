@@ -194,8 +194,8 @@ const LiveStreaming = () => {
     e.preventDefault()
 
     // daiApprove(100000000000000000000)
-    //executeBatchCall(amt, streamData.walletAddress, 500000000000000)
-    _sendNotification();
+    executeBatchCall(amt, streamData.walletAddress, 500000000000000)
+    //_sendNotification();
     toast.success(`Donated successfully`, {
       position: toast.POSITION.TOP_CENTER
     });

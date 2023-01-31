@@ -1,25 +1,49 @@
 .description {
-    margin-top: 3%;
-  }
-  
-  .mb-3 {
-    margin-left: 3%;
-    margin-right: 3%;
-  }
-  
-  .calculation {
-    border: 2px solid green;
-    padding: 2.5%;
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-top: 2.5%;
-  }
-  
-  .upgradeButton {
-    margin-bottom: 2.5%;
-  }
-  
-  .approveButton {
-    margin-bottom: 2.5%;
-  }
-  
+  margin-top: 3%;
+}
+
+.mb-3 {
+  margin-left: 3%;
+  margin-right: 3%;
+}
+
+.calculation {
+  border: 2px solid green;
+  padding: 2.5%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 2.5%;
+}
+
+.upgradeButton {
+  margin-bottom: 2.5%;
+}
+
+.approveButton {
+  margin-bottom: 2.5%;
+}
+
+.form {
+  width:50%;
+  min-height: 100px;
+}
+
+.cont {
+  width: 100vw;
+  height: 100vh;
+  background-color: #00DBDE;
+background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  width: 300px;
+}
+
+.btn:hover {
+  width: 300px;
+  transform: scale(1.1);
+}

@@ -9,6 +9,7 @@ import { useContext } from "react";
 import Auth from "../../../context/Auth";
 import { sendNotification } from '@pushprotocol/restapi/src/lib/payloads';
 import * as Push from "@pushprotocol/restapi";
+import { ToastContainer, toast } from 'react-toastify';
 const Giveaway = () => {
 
     const {address} = useContext(Auth)
@@ -26,15 +27,18 @@ const Giveaway = () => {
     const [EndDate, setED] = useState("");
     const [isApproveButtonLoading, setIsApproveButtonLoading] = useState(false);
     const [subs,setSubs] = useState("");
-    //will be used to approve super token contract to spend DAI
-    async function _sendNotification() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const { ethereum } = window;
+    const signer = provider.getSigner()
+    async function _sendNotification(_receiver,amt) {
+  
       let sender = address;
-      let reciver =subs ;
+      let reciver =_receiver ;
       console.log("Rev:",reciver);
       console.log("amt:", amt, "Receiver:", reciver, "sender:", sender);
       const apiResponse = sendNotification({
         signer,
-        type: 3, // target
+        type: 1, // target
         identityType: 2, // direct payload
         notification: {
           title: 'Giveaway',
@@ -53,11 +57,13 @@ const Giveaway = () => {
       console.log(apiResponse);
     }
   //where the Superfluid logic takes place
-  async function executeBatchCall(_msg,upgradeAmt) {
+   async function executeBatchCall(_msg,upgradeAmt) {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     var accounts;
 var flowRate = 500000000000000;
  console.log("Subs is :",await _msg);
+ var Receiver = await _msg;
+ console.log("Message:",Receiver,"Upgrade Amt",upgradeAmt);
     if(window.ethereum){
       try {
            accounts = await window.ethereum.request({
@@ -73,8 +79,7 @@ var flowRate = 500000000000000;
       provider: provider
     });
     const chainId = await window.ethereum.request({ method: "eth_chainId" });
-    const signer = provider.getSigner();
-  
+    const _signer = provider.getSigner();
     const DAIx = await sf.loadSuperToken(
       "0xF2d68898557cCb2Cf4C10c3Ef2B034b2a69DAD00"
     );
@@ -87,7 +92,7 @@ var flowRate = 500000000000000;
       //upgrade and create stream at once
       const createFlowOperation = DAIx.createFlow({
         sender: accounts[0],
-        receiver: _msg,
+        receiver: Receiver,
         flowRate: flowRate
       });
   
@@ -95,22 +100,26 @@ var flowRate = 500000000000000;
   
       await sf
         .batchCall([upgradeOperation, createFlowOperation])
-        .exec(signer)
+        .exec(_signer)
         .then(function (tx) {
           console.log(
             `Congrats - you've just successfully executed a batch call!
             You have completed 2 operations in a single tx 🤯
             View the tx here:  https://goerli.etherscan.io/tx/${tx.hash}
-            View Your Stream At: https://app.superfluid.finance/dashboard/${subs}
+            View Your Stream At: https://app.superfluid.finance/dashboard/${Receiver}
             Network: Goerli
             Super Token: DAIx
             Sender: 0xDCB45e4f6762C3D7C61a00e96Fb94ADb7Cf27721
-            Receiver: ${subs},
+            Receiver: ${Receiver},
             FlowRate: ${flowRate}
             `
           );
           //Add a push Notification here
-          _sendNotification();
+          _sendNotification(Receiver,upgradeAmt);
+          toast.success(`Giveaway Successful,check your push channel for winner`, {
+            position: toast.POSITION.TOP_CENTER
+          });
+
         });
   
     } catch (error) {
@@ -119,7 +128,7 @@ var flowRate = 500000000000000;
       );
       console.error(error);
     }
-  }
+  } 
   
     function calculateFlowRate(amount) {
       if (typeof Number(amount) !== "number" || isNaN(Number(amount)) === true) {
@@ -210,75 +219,26 @@ var flowRate = 500000000000000;
 
 
   return (
-    <div>
-      {/* <h2>Batch Calls</h2>
-      <h5>
-        Upgrade and create a flow in a single tx <span role="img">🤯</span>
-      </h5>
-      <div>
-        <Form>
-          <FormGroup className="mb-3">
-            <FormControl
-              name="upgradeAmount"
-              value={upgradeAmount}
-              onChange={handleUpgradeAmountChange}
-              placeholder="Enter the dollar amount you'd like to upgrade"
-            ></FormControl>
-          </FormGroup>
-        </Form>
-      </div>
-      <div>
-        <Form>
-          <FormGroup className="mb-3">
-            <FormControl
-              name="recipient"
-              value={recipient}
-              onChange={handleRecipientChange}
-              placeholder="Enter your Ethereum address"
-            ></FormControl>
-          </FormGroup>
-          <FormGroup className="mb-3">
-            <FormControl
-              name="flowRate"
-              value={flowRate}
-              onChange={handleFlowRateChange}
-              placeholder="Enter a flowRate in wei/second"
-            ></FormControl>
-          </FormGroup>
-          <BatchCallButton
-            onClick={() => {
-              setIsBatchCallButtonLoading(true);
-              executeBatchCall(upgradeAmount, recipient, flowRate);
-              setTimeout(() => {
-                setIsBatchCallButtonLoading(false);
-              }, 1000);
-            }}
-          >
-            Click to Upgrade Tokens and Create Your Stream
-          </BatchCallButton>
-        </Form>
-      </div> */}
-      <div>
-        <br>
-        </br>
-        <form>
-          <h2>Select a Random subscriber from your PUSH Channel and send him Love in form of Donations</h2>
-          <input type="Number" placeholder="Amount" name="Amount" onChange={handelAmount} value={Amountt}></input>
-          <button
-            type="submit"
-            onClick={(e) => {
-              e.preventDefault();
-              
-              executeBatchCall(getSubs(),Amountt);
-            }}
-          >
-            Click to schedule a stream
-          </button>
-        </form>
-      </div>
-
-
+    
+      <div className="cont">
+      <form className="form">
+        <h2 className="text-white">Select a Random subscriber from your PUSH Channel and send him Love in form of Donations</h2><br /><br />
+        <input type="text" placeholder="Amount" name="Amount" onChange={handelAmount} value={Amountt}></input><br /><br />
+        <button
+          type="submit"
+          className="btn-style btn"
+          onClick={(e) => {
+            e.preventDefault();
+     executeBatchCall(getSubs(),Amountt);
+//_sendNotification("0xDCB45e4f6762C3D7C61a00e96Fb94ADb7Cf27721",5)
+          }}
+        >
+         Giveaway 🚀
+        </button>
+      </form>
+      <ToastContainer autoClose={10000} />
     </div>
+  
   )
 }
 
