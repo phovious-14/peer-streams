@@ -19,7 +19,8 @@ const Streaming = () => {
   const mintNft = async () => {
 
     // suspend stream
-    let baseURL = `https://livepeer.studio/api/stream/${videoObj.id}`;
+    let baseURL;
+    baseURL = `https://livepeer.studio/api/stream/${videoObj.id}`;
     await axios.patch(baseURL, {
       suspended : true
     },{
