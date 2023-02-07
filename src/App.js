@@ -67,7 +67,7 @@ function App() {
                 </>
               : <>
                   <Route exact path="/" element={<StreamerHome />} />
-                 // <Route path="/create-stream" element={<CreateStream />} />
+                  <Route path="/create-stream" element={<CreateStream />} />
                   <Route path="/streaming-mode" element={<Streaming />} />
                   <Route path="/subscribers" element={<StreamerSubs />} />
                   <Route path="/create-channel" element={<CreateChannel />} />
