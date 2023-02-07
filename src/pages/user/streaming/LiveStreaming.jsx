@@ -40,15 +40,15 @@ const LiveStreaming = () => {
         vid.addEventListener("play", async () => {
           if (localStorage.getItem('isPlaying') === 'false') {
             console.log('play');
-            vid.pause();
-            await createNewFlow()
-            setTimeout(() => { vid.play() }, 5000)
+             /* vid.pause();
+            await createNewFlow() 
+            setTimeout(() => { vid.play() }, 5000)*/
           }
         })
 
         vid.addEventListener("pause", async () => {
           if (localStorage.getItem('isPlaying') === 'true') {
-            deleteNetFlow()
+           /* deleteNetFlow() */
           }
         })
         flag = false;
