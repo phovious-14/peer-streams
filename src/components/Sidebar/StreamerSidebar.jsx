@@ -7,7 +7,7 @@ import logo from "../../assets/newlogo2.png";
 import { Link } from "react-router-dom";
 
 const StreamerSidebar = () => {
-  const { changeMode, address, getChannelData } = useContext(Auth);
+  const { changeMode, address, getChannelData, channelData } = useContext(Auth);
 
   return (
     <>
@@ -29,6 +29,16 @@ const StreamerSidebar = () => {
                   </Link>
                 </a>
             </li>
+            {
+              channelData.length === 0 && 
+              <li className="nav-link">
+              <a>
+                <Link to="/create-channel">
+                <i class='bx bx-bell'></i>Create channel</span>
+                </Link>
+              </a>
+            </li>
+            }
             <li className="nav-link">
               <a>
                 <Link to="create-stream">

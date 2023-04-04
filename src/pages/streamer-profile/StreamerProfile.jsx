@@ -31,12 +31,6 @@ const StreamerProfile = () => {
             <div className='ch-data'>
               <h1> {channelData[0]}</h1>
             </div>
-            {
-              channelData.length === 0 && 
-              <button className='sub-btn' >
-                <Link to="/create-channel"><i class='bx bx-bell'></i>&nbsp; Become a creator</Link> 
-              </button>
-            }
 
             <button className='sub-btn'>
               <i class='bx bx-bell'></i>&nbsp; Subscribe
