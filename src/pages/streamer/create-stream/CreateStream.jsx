@@ -42,6 +42,7 @@ const CreateStream = () => {
       }
 
       if(stream !== undefined){
+        console.log(stream);
         if(stream.streamKey!==undefined){
           let obj = {name: streamName, info: streamInfo, key: stream.streamKey, id: stream.id, plabackId: stream.playbackId, url: stream.playbackUrl};
           
