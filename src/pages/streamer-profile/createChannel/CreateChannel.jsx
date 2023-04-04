@@ -17,7 +17,7 @@ const CreateChannel = () => {
     const submitForm = (e) => {
         e.preventDefault()
         CreateChannel(channelName, bio, twitter, discord, website)
-        // getChannelData()
+        getChannelData()
     }
 
   return (

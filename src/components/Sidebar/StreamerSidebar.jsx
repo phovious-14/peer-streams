@@ -34,7 +34,8 @@ const StreamerSidebar = () => {
               <li className="nav-link">
               <a>
                 <Link to="/create-channel">
-                <i class='bx bx-bell'></i>Create channel</span>
+                <i class='bx bx-bell'></i>
+                    <span className="text nav-text">Create channel</span>
                 </Link>
               </a>
             </li>
