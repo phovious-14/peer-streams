@@ -311,37 +311,19 @@ export const AuthProvider = ({ children }) => {
   }
  
   const fetchNft = async () => {
-    const APIKEY = 'ckey_bcf2a8cd82204dc3a01733fa007';
-    const baseURL = 'https://api.covalenthq.com/v1';
-    const url = new URL(`${baseURL}/5/address/${address}/balances_v2/?key=${APIKEY}&nft=true`);
-    //const url = "https://api.covalenthq.com/v1/137/address/0xDc35C75d027E4E65824cC656f655BcA90505C722/balances_v2/?key=ckey_bcf2a8cd82204dc3a01733fa007&nft=true"
-
-    const response = await fetch(url);
-    const result = await response.json();
-    const data = result.data.items;
-
-      for (var i = 0; i < data.length; i++) {
-        if(data[i].contract_address === "0x903a2684cebf15a47f32fdb2f95004caaa40da81"){
-          console.log("In Dataaa");
-          if (data[i]["nft_data"] != null) {
-            for (var j = 0; j < data[i]["nft_data"].length; j++) {
-              
-              console.log("Nft = " + data[i]["nft_data"][j].external_data["name"])
-              const name_l = data[i]["nft_data"][j].external_data["name"];
-              const description_l = data[i]["nft_data"][j].external_data["description"];
-              const image_l = data[i]["nft_data"][j].external_data["external_url"];
-              console.log("Nft Name = " + name_l + "Description =" + description_l + "image=" + image_l)
-
-              nftList.push({ id: j+1, name_l, description_l, image_l })
-            }
-
-          }
-        }
+    const APIKEY = '-6HI52W0oAMki2mFCFQVdCuCBT7I924N';
+    const baseURL = `https://eth-goerli.g.alchemy.com/nft/v2/${APIKEY}/getNFTs?owner=${address}`;
+       
+    const response = await axios.get(baseURL);
+    const res_data = response.data.ownedNfts;
+    
+    for(let i=0;i<res_data.length;i++){
+      if(res_data[i].contractMetadata.name == "Livepeer Video Nfts"){
+        let image_l = res_data[i].metadata.external_url;
+        nftList.push({ id: i+1, image_l })
       }
-
-      // const middle =  Math.ceil(nftList.length/2)
-      // nftList = nftList.slice(0, middle)
-      setNftsList(nftList)
+    }
+    setNftsList(nftList)
   }
 
   const changeMode = () => {
