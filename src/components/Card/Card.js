@@ -17,7 +17,7 @@ const btnStyle = {
 
 const Card = () => {
 
-  const {nftsList} = useContext(Auth)
+  const {nftsList,fetchNft} = useContext(Auth)
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -33,12 +33,10 @@ const Card = () => {
     setIsModalOpen(false);
   };
 
-  
-
   useEffect(() => {
     AOS.init();
-    console.log(nftsList);
-  }, [nftsList]);
+    fetchNft();
+  }, []);
 
   return (
     <div className="container2">

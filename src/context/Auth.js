@@ -311,19 +311,21 @@ export const AuthProvider = ({ children }) => {
   }
  
   const fetchNft = async () => {
-    const APIKEY = '-6HI52W0oAMki2mFCFQVdCuCBT7I924N';
-    const baseURL = `https://eth-goerli.g.alchemy.com/nft/v2/${APIKEY}/getNFTs?owner=${address}`;
-       
-    const response = await axios.get(baseURL);
-    const res_data = response.data.ownedNfts;
-    
-    for(let i=0;i<res_data.length;i++){
-      if(res_data[i].contractMetadata.name == "Livepeer Video Nfts"){
-        let image_l = res_data[i].metadata.external_url;
-        nftList.push({ id: i+1, image_l })
+    if(nftList){
+      const APIKEY = '-6HI52W0oAMki2mFCFQVdCuCBT7I924N';
+      const baseURL = `https://eth-goerli.g.alchemy.com/nft/v2/${APIKEY}/getNFTs?owner=${address}`;
+        
+      const response = await axios.get(baseURL);
+      const res_data = response.data.ownedNfts;
+      
+      for(let i=0;i<res_data.length;i++){
+        if(res_data[i].contractMetadata.name == "Livepeer Video Nfts"){
+          let image_l = res_data[i].metadata.external_url;
+          nftList.push({ id: i+1, image_l })
+        }
       }
+      setNftsList(nftList)
     }
-    setNftsList(nftList)
   }
 
   const changeMode = () => {
