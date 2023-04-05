@@ -34,7 +34,6 @@ const LiveStreaming = () => {
 
       const vid = document.getElementsByTagName("video")[0]
 
-      console.log(vid.getAttribute('data-metrics-initialized'));
       if (vid.getAttribute('data-metrics-initialized') && flag) {
         console.log(vid);
         vid.addEventListener("play", async () => {

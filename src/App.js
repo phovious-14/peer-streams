@@ -4,8 +4,7 @@ import HomeContainer from "./components/home-container/HomeContainer";
 import { Route, Routes } from "react-router-dom";
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
-import { alchemyProvider } from "wagmi/providers/alchemy";
+import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Home from "./pages/user/home/Home";
@@ -21,10 +20,11 @@ import CreateChannel from "./pages/streamer-profile/createChannel/CreateChannel"
 import StreamChannels from "./pages/user/channel-list/StreamChannels";
 import MintStreams from "./pages/streamer/mint-streams/MintStreams";
 import Giveaway from "./pages/streamer/Giveaway/Giveaway";
+import { goerli, polygonMumbai } from 'wagmi/chains';
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum, chain.goerli],
-  [alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
+  [goerli, polygonMumbai],
+  [publicProvider()]
 );
 const { connectors } = getDefaultWallets({
   appName: "My RainbowKit App",

@@ -306,7 +306,6 @@ export const AuthProvider = ({ children }) => {
     const data = await contract.getChannelInfo(address);
 
     const result = data.filter(d => {return d !== ''})
-    console.log(result);
     setChannelData(result)
   }
  

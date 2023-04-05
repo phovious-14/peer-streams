@@ -20,7 +20,7 @@ const StreamerProfile = () => {
       setBtn('posts')
     }
 
-    useEffect(() => {
+    useEffect(() => { 
       fetchNft()
     }, [])
 
