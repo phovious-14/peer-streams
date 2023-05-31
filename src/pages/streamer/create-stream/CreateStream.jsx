@@ -13,6 +13,7 @@ const CreateStream = () => {
 
   const [streamName, setStreamName] = useState("");
   const [streamInfo, setStreamInfo] = useState("");
+  const [streamFlowrate, setStreamFlowrate] = useState("")
   const navigate = useNavigate()
 
   const {
@@ -44,30 +45,31 @@ const CreateStream = () => {
       if(stream !== undefined){
         console.log(stream);
         if(stream.streamKey!==undefined){
-          let obj = {name: streamName, info: streamInfo, key: stream.streamKey, id: stream.id, plabackId: stream.playbackId, url: stream.playbackUrl};
+          console.log("flowrate "+streamFlowrate);
+          let obj = {name: streamName, flowrate: streamFlowrate, info: streamInfo, key: stream.streamKey, id: stream.id, plabackId: stream.playbackId, url: stream.playbackUrl};
           
           let baseURL = `${process.env.REACT_APP_BASE_URL}/api/streamer/${address}`;
           const data = await axios.get(baseURL)
           console.log(data.data);
           if (data.data) {      
             baseURL = `${process.env.REACT_APP_BASE_URL}/api/u_streamer`;
-            const data = await axios.post(baseURL, {
+            await axios.post(baseURL, {
               walletAddress:address,
               streamName,
               streamInfo,
+              flowrate:streamFlowrate,
               playbackId: stream.playbackId,
               isStreaming: true
             })
-            console.log(data);
           } else {
             baseURL = `${process.env.REACT_APP_BASE_URL}/api/streamer`;
-            const data = await axios.post(baseURL, {
+            await axios.post(baseURL, {
               walletAddress:address,
               streamName,
               streamInfo,
+              flowrate:streamFlowrate,
               playbackId: stream.playbackId
             })
-            console.log(data);
           }
           localStorage.setItem('videoInfo', JSON.stringify(obj))
           setVideo(obj)
@@ -95,6 +97,12 @@ const CreateStream = () => {
             type="text"
             placeholder="Stream info"
             onChange={(e) => setStreamInfo(e.target.value)}
+          />
+          <input
+            type="text"
+            defaultValue={500000000000000}
+            title="Flowrate (e.g. 500000000000000 ~ 0.0005 Dai)"
+            onChange={(e) => setStreamFlowrate(e.target.value)}
           />
           <button
             type="submit"

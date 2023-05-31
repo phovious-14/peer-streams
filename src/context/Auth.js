@@ -157,7 +157,8 @@ export const AuthProvider = ({ children }) => {
 
   //where the Superfluid logic takes place
   async function createNewFlow() {
-    let flowRate = 10000000;
+    console.log(parseInt(streamData.flowrate));
+    let flowRate = parseInt(streamData.flowrate);
     console.log("Connected", address);
 
     let recipient = streamData.walletAddress
